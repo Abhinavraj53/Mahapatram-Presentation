@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MahPatram - Slide 21 - Cross-Sector Pattern Recognition</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f1f5f9; 
+        }
+        .slide-container { 
+            width: 1280px; 
+            height: 720px; 
+            background-color: #ffffff; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+        }
+        h1, h2, h3, h4, h5, h6 { 
+            font-family: 'Montserrat', sans-serif; 
+        }
+        .accent-bar { 
+            background-color: #1e3a5f; 
+            width: 12px; 
+            height: 100%; 
+            position: absolute; 
+            left: 0; 
+            top: 0; 
+        }
+        
+        /* Logo Component */
+        .logo-container {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            width: 120px;
+            height: 120px;
+        }
+        
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Grid Layout */
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 12px;
+            padding: 0;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .pattern-card {
+            background-color: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .pattern-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-area {
+            flex: 1;
+            position: relative;
+            width: 100%;
+            min-height: 120px;
+            max-height: 140px;
+        }
+
+        .insight-text {
+            font-size: 0.7rem;
+            color: #64748b;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #f1f5f9;
+            line-height: 1.4;
+        }
+
+        .highlight-val {
+            font-weight: 700;
+            color: #1e3a5f;
+        }
+
+        /* Insight Box at Bottom */
+        .bottom-insight {
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            padding: 1rem 3rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container shadow-2xl">
+<!-- Left vertical accent bar -->
+<div class="accent-bar"></div>
+
+<!-- Logo -->
+<div class="logo-container">
+<img src="Mahapatram Logo.png" alt="MahPatram Logo" />
+</div>
+
+<!-- Header -->
+<div class="pt-10 pl-24 pr-40 mb-4">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-2 h-8 bg-[#1e3a5f]"></div>
+<p class="text-[#64748b] font-bold tracking-widest uppercase text-sm">Evidence Based • Internal Data 2019-2025</p>
+</div>
+<div class="flex justify-between items-end">
+<h1 class="text-4xl font-extrabold text-[#1e3a5f] leading-tight">
+            Cross-Sector <span class="text-[#10b981]">Pattern Recognition</span>
+        </h1>
+<div class="bg-slate-100 px-4 py-2 rounded text-sm font-semibold text-slate-600">
+<i class="fas fa-database text-slate-400 mr-2"></i> Analysis of 40+ Enterprise Engagements
+        </div>
+</div>
+</div>
+
+<!-- Main Grid Content -->
+<div class="flex flex-1 flex-col px-24 pb-4 overflow-hidden">
+<div class="pattern-grid">
+<!-- Card 1: Leadership Alignment -->
+<div class="pattern-card">
+<div class="card-header">
+<div class="pattern-title">
+<i class="fas fa-chess-king text-[#f97316]"></i>
+                    Pattern 1: Leadership Alignment
+                </div>
+</div>
+<div class="chart-area">
+<canvas id="chartAlignment"></canvas>
+</div>
+<div class="insight-text">
+<p>Transformations with <span class="highlight-val">&gt;75% leadership alignment</span> are 3.3x more likely to succeed. Misalignment at the top is the single biggest predictor of failure.</p>
+</div>
+</div>
+
+<!-- Card 2: Investment Mix -->
+<div class="pattern-card">
+<div class="card-header">
+<div class="pattern-title">
+<i class="fas fa-chart-pie text-[#f97316]"></i>
+                    Pattern 2: Adoption Investment
+                </div>
+</div>
+<div class="chart-area">
+<canvas id="chartInvestment"></canvas>
+</div>
+<div class="insight-text">
+<p>Allocating <span class="highlight-val">≥25% of budget</span> to people capability accelerates value realization by ~5 months, whereas tech-heavy approaches typically face delays.</p>
+</div>
+</div>
+
+<!-- Card 3: Engagement Duration -->
+<div class="pattern-card">
+<div class="card-header">
+<div class="pattern-title">
+<i class="fas fa-hourglass-half text-[#f97316]"></i>
+                    Pattern 3: Duration &amp; ROI
+                </div>
+</div>
+<div class="chart-area">
+<canvas id="chartDuration"></canvas>
+</div>
+<div class="insight-text">
+<p>Long-term engagements (12+ months) yield <span class="highlight-val">3.4x ROI</span> compared to short-term pilots. Value compounds as capabilities are transferred to internal teams.</p>
+</div>
+</div>
+
+<!-- Card 4: Middle Manager Role -->
+<div class="pattern-card">
+<div class="card-header">
+<div class="pattern-title">
+<i class="fas fa-users-cog text-[#f97316]"></i>
+                    Pattern 4: The Manager Multiplier
+                </div>
+</div>
+<div class="chart-area">
+<canvas id="chartManagers"></canvas>
+</div>
+<div class="insight-text">
+<p>Middle managers are the bridge. When actively coached, they drive <span class="highlight-val">81% frontline adoption</span>. When skipped, adoption collapses to 34%.</p>
+</div>
+</div>
+</div>
+
+<!-- Bottom Insight -->
+<div class="bottom-insight">
+<div class="flex items-center justify-center w-9 h-9 rounded-full bg-green-100 text-[#10b981] flex-shrink-0">
+<i class="fas fa-lightbulb"></i>
+</div>
+<div>
+<p class="text-[#1e3a5f] font-bold text-xs uppercase tracking-wide mb-1">Systemic Insight</p>
+<p class="text-[#475569] text-xs font-medium">Transformation success is not random; it follows a predictable system. The variable is rarely the technology—it is always the <span class="font-bold text-[#1e3a5f]">human adoption architecture</span>.</p>
+</div>
+</div>
+</div>
+
+<!-- Slide Number -->
+<div class="absolute bottom-4 right-8 text-[#94a3b8] text-sm font-semibold">21</div>
+</div>
+<script>
+        // Common Chart Options
+        Chart.defaults.font.family = "'Open Sans', sans-serif";
+        Chart.defaults.color = '#64748b';
+        
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#1e3a5f',
+                    titleFont: { family: 'Montserrat', size: 12 },
+                    bodyFont: { family: 'Open Sans', size: 11 },
+                    padding: 8,
+                    cornerRadius: 4
+                },
+                datalabels: {
+                    color: '#fff',
+                    font: { weight: 'bold', size: 10 },
+                    formatter: (value) => value
+                }
+            },
+            scales: {
+                x: { 
+                    grid: { display: false }, 
+                    ticks: { font: { size: 9, weight: '600' } } 
+                },
+                y: { 
+                    display: false, 
+                    grid: { display: false }, 
+                    min: 0 
+                }
+            }
+        };
+
+        // Chart 1: Leadership Alignment
+        new Chart(document.getElementById('chartAlignment'), {
+            type: 'bar',
+            data: {
+                labels: ['<50% Alignment', '>75% Alignment'],
+                datasets: [{
+                    label: 'Success Rate',
+                    data: [28, 92],
+                    backgroundColor: ['#cbd5e1', '#10b981'],
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'bottom',
+                        color: ['#475569', '#fff'],
+                        font: { weight: 'bold', size: 10 },
+                        formatter: (val) => val + '%'
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+
+        // Chart 2: Investment Impact (Horizontal Diverging)
+        new Chart(document.getElementById('chartInvestment'), {
+            type: 'bar',
+            data: {
+                labels: ['People-First Inv.', 'Tech-Heavy Inv.'],
+                datasets: [{
+                    data: [5.2, -14.7],
+                    backgroundColor: ['#10b981', '#ef4444'],
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#1e3a5f',
+                        titleFont: { family: 'Montserrat', size: 12 },
+                        bodyFont: { family: 'Open Sans', size: 11 },
+                        padding: 8,
+                        cornerRadius: 4
+                    },
+                    datalabels: {
+                        color: '#fff',
+                        font: { weight: 'bold', size: 9 },
+                        formatter: (val) => val > 0 ? `+${val} Mo Faster` : `${val} Mo Delay`
+                    }
+                },
+                scales: {
+                    x: { 
+                        display: true, 
+                        grid: { color: '#f1f5f9' },
+                        ticks: { 
+                            font: { size: 9 },
+                            callback: (val) => val > 0 ? '+' + val : val 
+                        }
+                    },
+                    y: { 
+                        grid: { display: false }, 
+                        ticks: { font: { size: 9, weight: 'bold' } } 
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+
+        // Chart 3: Duration ROI
+        new Chart(document.getElementById('chartDuration'), {
+            type: 'bar',
+            data: {
+                labels: ['Pilot Only', '12+ Months'],
+                datasets: [{
+                    label: 'ROI Multiple',
+                    data: [1.0, 3.4],
+                    backgroundColor: ['#cbd5e1', '#1e3a5f'],
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'bottom',
+                        color: ['#475569', '#fff'],
+                        font: { weight: 'bold', size: 10 },
+                        formatter: (val) => val + 'x ROI'
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+
+        // Chart 4: Middle Managers
+        new Chart(document.getElementById('chartManagers'), {
+            type: 'bar',
+            data: {
+                labels: ['Managers Skipped', 'Managers Engaged'],
+                datasets: [{
+                    label: 'Adoption %',
+                    data: [34, 81],
+                    backgroundColor: ['#cbd5e1', '#10b981'],
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'bottom',
+                        color: ['#475569', '#fff'],
+                        font: { weight: 'bold', size: 10 },
+                        formatter: (val) => val + '% Adoption'
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MahPatram - Slide 5 - The Cost of Misalignment</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&amp;family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; background-color: #f1f5f9; }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background: linear-gradient(125deg, #ffffff 0%, #f8fafc 62%, #eef2ff 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
+        .accent-bar { background-color: #1e3a5f; width: 12px; height: 100%; position: absolute; left: 0; top: 0; }
+        .back-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent 85%);
+            pointer-events: none;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 22px;
+            right: 24px;
+            z-index: 100;
+            width: 112px;
+            height: 112px;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .impact-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px -16px rgba(15, 23, 42, 0.65);
+            position: relative;
+        }
+
+        .impact-card.critical {
+            border-color: #fecaca;
+            background: linear-gradient(150deg, #ffffff 0%, #fff1f2 100%);
+        }
+
+        .phase-node {
+            width: 42px;
+            height: 42px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            color: #ffffff;
+            flex-shrink: 0;
+        }
+
+        .phase-node.execution { background: #1e3a5f; }
+        .phase-node.realization { background: #334155; }
+        .phase-node.outcome { background: #dc2626; }
+
+        .stack-line {
+            position: absolute;
+            left: 20px;
+            top: 68px;
+            bottom: 68px;
+            width: 2px;
+            background: linear-gradient(to bottom, #1e3a5f 0%, #f97316 48%, #dc2626 100%);
+            opacity: 0.28;
+        }
+
+        .kpi-pill {
+            background: rgba(248, 250, 252, 0.9);
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 8px 12px;
+            min-width: 170px;
+        }
+
+        .metric-row {
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid #dbe3ef;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container shadow-2xl">
+<!-- Left vertical accent bar -->
+<div class="accent-bar"></div>
+<div class="back-grid"></div>
+<!-- Logo -->
+<div class="logo-container">
+<img src="Mahapatram Logo.png" alt="MahPatram Logo" />
+</div>
+<!-- Header -->
+<div class="pt-8 pl-24 pr-44">
+<div class="flex items-center gap-2 mb-1">
+<div class="w-2 h-7 bg-[#f97316]"></div>
+<p class="text-[#64748b] font-bold tracking-widest uppercase text-xs">The Financial Impact</p>
+</div>
+<h1 class="text-[2.65rem] font-extrabold text-[#1e3a5f] leading-tight w-[74%]">
+                The Cost of <span class="text-[#f97316]">Misalignment</span>
+            </h1>
+<p class="text-[#475569] text-sm leading-relaxed mt-2 max-w-[870px]">
+                Deployment without adoption creates an interest-bearing loss cycle across budget, timeline, and value realization.
+            </p>
+</div>
+<!-- KPI ribbon -->
+<div class="px-24 pt-4 pb-3">
+<div class="metric-row grid grid-cols-3 gap-3 p-3">
+<div class="kpi-pill">
+<p class="text-[10px] uppercase tracking-wider font-bold text-[#94a3b8] mb-1">Budget drag</p>
+<p class="text-xl font-extrabold text-[#1e3a5f] leading-none">2.5x cost pressure</p>
+</div>
+<div class="kpi-pill">
+<p class="text-[10px] uppercase tracking-wider font-bold text-[#94a3b8] mb-1">Value delay</p>
+<p class="text-xl font-extrabold text-[#1e3a5f] leading-none">18-24 month lag</p>
+</div>
+<div class="kpi-pill">
+<p class="text-[10px] uppercase tracking-wider font-bold text-[#94a3b8] mb-1">Business erosion</p>
+<p class="text-xl font-extrabold text-[#dc2626] leading-none">40-60% ROI loss</p>
+</div>
+</div>
+</div>
+<!-- Main content -->
+<div class="flex-1 px-24 pb-8">
+<div class="h-full grid grid-cols-[2fr_1fr] gap-5">
+<div class="relative">
+<div class="stack-line"></div>
+<div class="h-full grid grid-rows-3 gap-3">
+<div class="impact-card p-4 pl-16">
+<div class="phase-node execution absolute top-4 left-4">
+<i class="fas fa-coins"></i>
+</div>
+<div class="flex items-center justify-between mb-1">
+<p class="text-[11px] uppercase tracking-[0.18em] text-[#94a3b8] font-bold">Execution phase</p>
+<p class="text-[2.1rem] font-extrabold text-[#1e3a5f] leading-none">2.5x</p>
+</div>
+<p class="text-sm font-bold uppercase tracking-wide text-[#f97316]">Budget overruns</p>
+<p class="text-[13px] text-[#475569] leading-relaxed mt-1.5">Excess spend on rework, hypercare, and low-utilization licenses.</p>
+</div>
+
+<div class="impact-card p-4 pl-16">
+<div class="phase-node realization absolute top-4 left-4">
+<i class="far fa-clock"></i>
+</div>
+<div class="flex items-center justify-between mb-1">
+<p class="text-[11px] uppercase tracking-[0.18em] text-[#94a3b8] font-bold">Realization phase</p>
+<p class="text-[2.1rem] font-extrabold text-[#1e3a5f] leading-none">18-24</p>
+</div>
+<p class="text-sm font-bold uppercase tracking-wide text-[#f97316]">Months of delay</p>
+<p class="text-[13px] text-[#475569] leading-relaxed mt-1.5">Gap between go-live and measurable business benefit stretches the payback window.</p>
+</div>
+
+<div class="impact-card critical p-4 pl-16">
+<div class="phase-node outcome absolute top-4 left-4">
+<i class="fas fa-chart-line-down"></i>
+</div>
+<div class="flex items-center justify-between mb-1">
+<p class="text-[11px] uppercase tracking-[0.18em] text-[#94a3b8] font-bold">Outcome phase</p>
+<p class="text-[2.1rem] font-extrabold text-[#dc2626] leading-none">40-60%</p>
+</div>
+<p class="text-sm font-bold uppercase tracking-wide text-[#dc2626]">ROI erosion</p>
+<p class="text-[13px] text-[#475569] leading-relaxed mt-1.5">Projected value is permanently lost as adoption remains partial and behavior does not normalize.</p>
+</div>
+</div>
+</div>
+
+<div class="bg-[#1e293b] text-white rounded-2xl p-5 flex flex-col">
+<p class="text-[11px] uppercase tracking-wider font-bold text-[#f97316] mb-3 flex items-center gap-2">
+<i class="fas fa-lightbulb"></i> Debt Multiplier
+</p>
+<h3 class="text-xl font-extrabold leading-tight mb-2">Adoption Debt compounds over time.</h3>
+<p class="text-xs text-slate-300 leading-relaxed mb-4">Risk does not stay linear. The longer the delay, the larger the value leakage.</p>
+
+<div class="space-y-3 mt-auto">
+<div>
+<div class="flex items-center justify-between text-[11px] uppercase tracking-wide font-bold text-slate-300 mb-1">
+<span>Quarter 1</span>
+<span>1.0x</span>
+</div>
+<div class="w-full h-2 rounded-full bg-slate-700"><div class="h-2 rounded-full bg-[#f97316] w-1/4"></div></div>
+</div>
+<div>
+<div class="flex items-center justify-between text-[11px] uppercase tracking-wide font-bold text-slate-300 mb-1">
+<span>Quarter 2</span>
+<span>1.8x</span>
+</div>
+<div class="w-full h-2 rounded-full bg-slate-700"><div class="h-2 rounded-full bg-[#fb923c] w-[58%]"></div></div>
+</div>
+<div>
+<div class="flex items-center justify-between text-[11px] uppercase tracking-wide font-bold text-slate-300 mb-1">
+<span>Quarter 3+</span>
+<span>3.0x</span>
+</div>
+<div class="w-full h-2 rounded-full bg-slate-700"><div class="h-2 rounded-full bg-[#ef4444] w-full"></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer insight -->
+<div class="px-24 pb-3">
+<div class="bg-white/90 border border-slate-200 rounded-xl px-4 py-2.5 flex items-start gap-3">
+<i class="fas fa-triangle-exclamation text-[#f97316] mt-0.5"></i>
+<p class="text-xs text-[#334155] leading-relaxed font-semibold">
+Adoption gaps create <span class="text-[#f97316] font-bold">interest-bearing debt</span> on transformation P&amp;L. Every month of delay expands cost, extends recovery, and compresses strategic upside.
+</p>
+</div>
+<!-- Footer Source -->
+<p class="text-[11px] text-[#64748b] tracking-[0.02em] font-semibold mt-2 ml-1">
+<strong class="text-[#475569]">Sources:</strong> McKinsey &amp; Company (Large IT Projects Study); PMI Pulse of the Profession; HBR Case Analyses.
+            </p>
+</div>
+<!-- Slide Number -->
+<div class="absolute bottom-6 right-8 text-[#94a3b8] text-sm font-semibold">05</div>
+</div>
+</body>
+</html>

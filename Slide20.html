@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MahPatram - Slide 20 - Case Study 5</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f1f5f9; 
+        }
+        .slide-container { 
+            width: 1280px; 
+            height: 720px; 
+            background-color: #ffffff; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+        }
+        h1, h2, h3, h4, h5, h6 { 
+            font-family: 'Montserrat', sans-serif; 
+        }
+        .accent-bar { 
+            background-color: #1e3a5f; 
+            width: 12px; 
+            height: 100%; 
+            position: absolute; 
+            left: 0; 
+            top: 0; 
+        }
+        
+        /* Logo Component */
+        .logo-container {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            width: 120px;
+            height: 120px;
+        }
+        
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Context Styles */
+        .context-card {
+            background-color: #f8fafc;
+            border-left: 4px solid #cbd5e1;
+            padding: 0.875rem;
+            margin-bottom: 0.75rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .context-card.challenge { border-left-color: #ef4444; }
+        .context-card.intervention { border-left-color: #1e3a5f; }
+
+        .card-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .challenge .card-label { color: #ef4444; }
+        .intervention .card-label { color: #1e3a5f; }
+
+        /* Timeline Visualization */
+        .timeline-chart-container {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 0.75rem;
+        }
+
+        .timeline-track {
+            position: relative;
+            height: 70px;
+            margin-top: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .timeline-bar {
+            height: 20px;
+            border-radius: 4px;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            padding-left: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .year-marker {
+            position: absolute;
+            bottom: -20px;
+            transform: translateX(-50%);
+            font-size: 0.65rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .year-line {
+            position: absolute;
+            bottom: 0;
+            top: -10px;
+            width: 1px;
+            background-color: #e2e8f0;
+            z-index: 0;
+        }
+
+        /* Metric Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            flex: 1;
+        }
+
+        .metric-card {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .metric-value-big {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #1e3a5f;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .pipeline-visual {
+            display: flex;
+            gap: 2px;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+        
+        .molecule-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #cbd5e1;
+        }
+        
+        .molecule-dot.active { background-color: #10b981; }
+
+        /* Insight Box - Green as per screenshot */
+        .insight-box {
+            background-color: #ecfdf5;
+            border-left: 4px solid #10b981;
+            padding: 0.875rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 0.75rem;
+        }
+
+        .insight-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #065f46;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .insight-text {
+            font-size: 0.75rem;
+            color: #1e3a5f;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container shadow-2xl">
+<!-- Left vertical accent bar -->
+<div class="accent-bar"></div>
+
+<!-- Logo -->
+<div class="logo-container">
+<img src="Mahapatram Logo.png" alt="MahPatram Logo" />
+</div>
+
+<!-- Header -->
+<div class="pt-10 pl-24 pr-40 mb-4">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-2 h-8 bg-[#1e3a5f]"></div>
+<p class="text-[#64748b] font-bold tracking-widest uppercase text-sm">Case Study 05 • Life Sciences &amp; Pharma</p>
+</div>
+<div class="flex justify-between items-end">
+<h1 class="text-4xl font-extrabold text-[#1e3a5f] leading-tight">
+            From Hierarchical to <span class="text-[#10b981]">Networked Innovation</span>
+        </h1>
+<div class="bg-slate-100 px-4 py-2 rounded text-sm font-semibold text-slate-600">
+<i class="fas fa-flask text-slate-400 mr-2"></i> Global Pharma India R&amp;D Center
+        </div>
+</div>
+</div>
+
+<!-- Main Content -->
+<div class="flex flex-1 px-24 pb-4 gap-8 overflow-hidden">
+<!-- Left Column: Context -->
+<div class="w-1/3 flex flex-col">
+<p class="text-[#475569] text-xs leading-relaxed mb-4 font-medium">
+        Despite a large talent pool (2,400 scientists), the innovation pipeline was stagnating due to functional silos (Chemistry vs. Biology vs. Clinical) and decision bottlenecks.
+    </p>
+
+<div class="context-card challenge">
+<div class="card-label">
+<i class="fas fa-exclamation-circle"></i> The Challenge
+            </div>
+<ul class="space-y-1">
+<li class="text-[#334155] text-xs flex items-start gap-2">
+<span class="text-red-400 mt-0.5">•</span>
+<span><span class="font-bold">Pipeline Stagnation:</span> 6-year development cycles (vs 4-year benchmark).</span>
+</li>
+<li class="text-[#334155] text-xs flex items-start gap-2">
+<span class="text-red-400 mt-0.5">•</span>
+<span><span class="font-bold">Talent Crisis:</span> 23% attrition in critical PI roles.</span>
+</li>
+<li class="text-[#334155] text-xs flex items-start gap-2">
+<span class="text-red-400 mt-0.5">•</span>
+<span>Risk-averse culture stifling hypothesis generation.</span>
+</li>
+</ul>
+</div>
+
+<div class="context-card intervention">
+<div class="card-label">
+<i class="fas fa-dna"></i> The Intervention
+            </div>
+<ul class="space-y-1">
+<li class="text-[#334155] text-xs flex items-start gap-2">
+<span class="text-[#1e3a5f] mt-0.5">•</span>
+<span><span class="font-bold">Leadership Mindset Shift:</span> Moving from "Command &amp; Control" to "Enable &amp; Empower."</span>
+</li>
+<li class="text-[#334155] text-xs flex items-start gap-2">
+<span class="text-[#1e3a5f] mt-0.5">•</span>
+<span>Cross-functional coaching for 12 core drug development teams.</span>
+</li>
+<li class="text-[#334155] text-xs flex items-start gap-2">
+<span class="text-[#1e3a5f] mt-0.5">•</span>
+<span>Stage-gate process simplification (Decision speed).</span>
+</li>
+</ul>
+</div>
+
+<!-- Insight Box - Green as per screenshot -->
+<div class="insight-box mt-auto">
+<div>
+<p class="insight-title">
+<i class="fas fa-lightbulb text-[#10b981]"></i> Business Insight
+            </p>
+<p class="insight-text">
+                Leadership behavior change directly unlocked <span class="font-bold">innovation velocity</span>.<br/>
+<span class="text-slate-500 font-normal">Psychological safety is the R&amp;D engine.</span>
+            </p>
+</div>
+</div>
+</div>
+
+<!-- Right Column: Visualizations -->
+<div class="w-2/3 flex flex-col gap-3">
+<!-- Visual 1: Timeline Compression -->
+<div class="timeline-chart-container">
+<div class="flex justify-between items-center mb-2">
+<h3 class="text-[#1e3a5f] font-bold text-sm">Molecule-to-IND Timeline Acceleration</h3>
+<span class="bg-green-100 text-[#166534] text-xs font-bold px-2 py-1 rounded">2.1 Years Saved</span>
+</div>
+<div class="timeline-track">
+<!-- Background Grid Lines -->
+<div class="year-line" style="left: 0%;"></div>
+<div class="year-line" style="left: 20%;"></div>
+<div class="year-line" style="left: 40%;"></div>
+<div class="year-line" style="left: 60%;"></div>
+<div class="year-line" style="left: 80%;"></div>
+<div class="year-line" style="left: 100%;"></div>
+<!-- Labels -->
+<div class="year-marker" style="left: 0%;">0</div>
+<div class="year-marker" style="left: 20%;">1.5</div>
+<div class="year-marker" style="left: 40%;">3.0</div>
+<div class="year-marker" style="left: 60%;">4.5</div>
+<div class="year-marker" style="left: 80%;">6.0</div>
+<div class="year-marker" style="left: 100%;">7.5 Yrs</div>
+<!-- Bar 1: Old -->
+<div class="timeline-bar bg-slate-300" style="width: 82.6%; top: 0px;">
+<span class="text-xs font-bold text-slate-600">Historical: 6.2 Years</span>
+</div>
+<!-- Bar 2: New -->
+<div class="timeline-bar bg-[#1e3a5f]" style="width: 54.6%; top: 28px;">
+<span class="text-xs font-bold text-white">Current: 4.1 Years</span>
+</div>
+</div>
+</div>
+
+<!-- Metrics Grid -->
+<div class="metrics-grid">
+<!-- Pipeline Growth -->
+<div class="metric-card">
+<div class="metric-label">
+<i class="fas fa-vial text-slate-400"></i> Active Pipeline
+            </div>
+<div class="flex items-end gap-2">
+<span class="metric-value-big text-[#10b981]">34</span>
+<span class="text-xs text-slate-500 font-bold mb-1">Molecules</span>
+</div>
+<div class="text-xs text-slate-500 mb-2">From 18 Baseline (+88%)</div>
+<!-- Visual dots -->
+<div class="pipeline-visual">
+<!-- 18 grey dots -->
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<div class="molecule-dot"></div>
+<!-- 16 green dots -->
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+<div class="molecule-dot active"></div>
+</div>
+</div>
+
+<!-- Critical Attrition -->
+<div class="metric-card">
+<div class="metric-label">
+<i class="fas fa-user-shield text-slate-400"></i> Critical Attrition
+            </div>
+<div class="flex items-end gap-2">
+<span class="metric-value-big text-[#1e3a5f]">9%</span>
+<span class="bg-green-100 text-[#166534] text-xs font-bold px-2 py-1 rounded mb-1">-14 pts</span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded mt-3 overflow-hidden relative">
+<div class="absolute bg-red-300 h-full left-0 top-0" style="width: 23%"></div>
+<div class="absolute bg-[#10b981] h-full left-0 top-0" style="width: 9%"></div>
+</div>
+<div class="flex justify-between text-[10px] text-slate-400 mt-1">
+<span>Target: &lt;10%</span>
+<span>Prev: 23%</span>
+</div>
+<div class="mt-auto pt-2 border-t border-slate-100">
+<div class="flex justify-between items-center">
+<span class="text-[10px] font-bold text-slate-500">Psych Safety</span>
+<span class="text-[10px] font-bold text-[#10b981]">42nd → 87th %ile</span>
+</div>
+</div>
+</div>
+
+<!-- Value Creation -->
+<div class="metric-card bg-[#f0f9ff] border-blue-200">
+<div class="metric-label text-[#0369a1]">
+<i class="fas fa-coins"></i> Value Creation
+            </div>
+<div class="metric-value-big text-[#0369a1]">₹420 Cr</div>
+<p class="text-xs text-[#0c4a6e] font-medium leading-tight">
+                Estimated NPV impact from accelerated time-to-market for 3 priority assets.
+            </p>
+<div class="mt-auto flex items-center gap-2 pt-3">
+<div class="w-7 h-7 rounded-full bg-white flex items-center justify-center border border-blue-100">
+<i class="fas fa-rocket text-[#f97316] text-xs"></i>
+</div>
+<span class="text-[10px] font-bold text-[#0c4a6e]">First-to-market advantage secured</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Slide Number -->
+<div class="absolute bottom-4 right-8 text-[#94a3b8] text-sm font-semibold">20</div>
+</div>
+</body>
+</html>

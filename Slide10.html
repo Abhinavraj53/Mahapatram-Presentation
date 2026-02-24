@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MahPatram - Slide 10 - Methodology Ecosystem</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; background-color: #f1f5f9; }
+        .slide-container { 
+            width: 1280px; 
+            height: 720px; 
+            background-color: #ffffff; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
+        .accent-bar { background-color: #1e3a5f; width: 12px; height: 100%; position: absolute; left: 0; top: 0; }
+        
+        /* Logo Component */
+        .logo-container {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            width: 120px;
+            height: 120px;
+        }
+        
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Wheel Container */
+        .wheel-container {
+            position: relative;
+            width: 560px;
+            height: 460px;
+            margin: 0 auto;
+        }
+
+        /* Canvas for connecting lines */
+        #wheelCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* Central Hub */
+        .hub-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            background-color: #1e3a5f;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            box-shadow: 0 10px 25px rgba(30, 58, 95, 0.3);
+            border: 4px solid #ffffff;
+            color: white;
+            text-align: center;
+        }
+
+        /* Satellite Nodes */
+        .node {
+            position: absolute;
+            width: 200px; /* Fixed width for text layout */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 10;
+            transition: transform 0.3s ease;
+        }
+        .node:hover {
+            transform: scale(1.05);
+            z-index: 20;
+        }
+
+        .node-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: white;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: #64748b;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        /* Specific node colors on hover/active */
+        .node:hover .node-icon {
+            border-color: #f97316;
+            color: #f97316;
+            box-shadow: 0 10px 15px rgba(249, 115, 22, 0.15);
+        }
+
+        .node-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #1e3a5f;
+            line-height: 1.2;
+            background-color: rgba(255,255,255,0.9);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        
+        .node-desc {
+            font-size: 0.7rem;
+            color: #64748b;
+            margin-top: 4px;
+            line-height: 1.2;
+            max-width: 180px;
+        }
+
+        .insight-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #f97316;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container shadow-2xl">
+<!-- Left vertical accent bar -->
+<div class="accent-bar"></div>
+<!-- Logo -->
+<div class="logo-container">
+<img src="Mahapatram Logo.png" alt="MahPatram Logo" />
+</div>
+<!-- Header -->
+<div class="pt-12 pl-24 pr-40 mb-4">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-2 h-8 bg-[#f97316]"></div>
+<p class="text-[#64748b] font-bold tracking-widest uppercase text-sm">Our Toolkit</p>
+</div>
+<h1 class="text-4xl font-extrabold text-[#1e3a5f] leading-tight w-3/4">
+                Methodology <span class="text-[#f97316]">Ecosystem</span>
+</h1>
+</div>
+<!-- Main Content -->
+<div class="flex flex-1 px-24 relative">
+<!-- Left Side: Insight & Context -->
+<div class="w-1/3 pt-12 pr-8 z-20 flex flex-col justify-between pb-16">
+<div>
+<p class="text-[#475569] text-base leading-relaxed mb-8 font-medium">
+                        We don't rely on a single hammer. Our approach integrates best-in-class frameworks from psychology, systems theory, and management science.
+                    </p>
+<ul class="space-y-4">
+<li class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-[#1e3a5f]"></div>
+<p class="text-[#334155] text-sm"><strong>Evidence-Based:</strong> Rooted in research, not trends.</p>
+</li>
+<li class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-[#1e3a5f]"></div>
+<p class="text-[#334155] text-sm"><strong>Context-Aware:</strong> Adapted to your specific culture.</p>
+</li>
+<li class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-[#1e3a5f]"></div>
+<p class="text-[#334155] text-sm"><strong>Scalable:</strong> Tools that work for 10 or 10,000.</p>
+</li>
+</ul>
+</div>
+<!-- Insight Box -->
+<div class="insight-box">
+<p class="text-[#1e3a5f] font-bold text-xs mb-2 uppercase tracking-wider flex items-center gap-2">
+<i class="fas fa-lightbulb text-[#f97316]"></i> Integrated Application
+                    </p>
+<p class="text-[#334155] text-sm leading-relaxed font-semibold">
+                        We overlay <span class="text-[#f97316]">hard data</span> (ONA, Analytics) with <span class="text-[#f97316]">human insight</span> (ORSC, Adult Dev) to see the full system.
+                    </p>
+</div>
+</div>
+<!-- Right Side: Wheel Diagram -->
+<div class="w-2/3 flex justify-center items-center relative -mt-8">
+<div class="wheel-container">
+        <canvas height="460" id="wheelCanvas" width="560"></canvas>
+<!-- Hub -->
+<div class="hub-center">
+<div class="text-2xl mb-1"><i class="fas fa-layer-group"></i></div>
+<div class="text-xs font-bold tracking-wider">MAHPATRAM</div>
+<div class="text-[9px] uppercase tracking-wide opacity-80 mt-1">Integrated<br/>Approach</div>
+</div>
+<!-- Node 1: Top (ORSC) -->
+<div class="node" style="top: 20px; left: 50%; transform: translateX(-50%);">
+<div class="node-icon"><i class="fas fa-users-rays"></i></div>
+<div class="node-title">ORSC® Systemic<br/>Team Coaching</div>
+<p class="node-desc">Relationship Systems Intelligence</p>
+</div>
+<!-- Node 2: Top Right (Assessments) -->
+<div class="node" style="top: 100px; right: -20px;">
+<div class="node-icon"><i class="fas fa-id-card-clip"></i></div>
+<div class="node-title">Hogan &amp; EQ-i<br/>Assessments</div>
+<p class="node-desc">Leadership Personality &amp; EQ</p>
+</div>
+<!-- Node 3: Bottom Right (Change Analytics) -->
+<div class="node" style="bottom: 100px; right: -20px;">
+<div class="node-icon"><i class="fas fa-chart-pie"></i></div>
+<div class="node-title">Change<br/>Analytics</div>
+<p class="node-desc">Adoption &amp; Sentiment Tracking</p>
+</div>
+<!-- Node 4: Bottom (ONA) -->
+<div class="node" style="bottom: 20px; left: 50%; transform: translateX(-50%);">
+<div class="node-icon"><i class="fas fa-project-diagram"></i></div>
+<div class="node-title">Organizational<br/>Network Analysis</div>
+<p class="node-desc">Mapping Informal Influence</p>
+</div>
+<!-- Node 5: Bottom Left (Adult Dev) -->
+<div class="node" style="bottom: 100px; left: -20px;">
+<div class="node-icon"><i class="fas fa-brain"></i></div>
+<div class="node-title">Adult Development<br/>Theory</div>
+<p class="node-desc">Kegan/Lahey Immunity to Change</p>
+</div>
+<!-- Node 6: Top Left (Agile/Lean) -->
+<div class="node" style="top: 100px; left: -20px;">
+<div class="node-icon"><i class="fas fa-rocket"></i></div>
+<div class="node-title">Agile/Lean<br/>Transformation</div>
+<p class="node-desc">Iterative Delivery Models</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="absolute bottom-6 right-8 text-[#94a3b8] text-sm font-semibold">10</div>
+</div>
+<script>
+        // Drawing the connecting lines on canvas
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        
+        // Configuration matches HTML positioning
+        // Angles adjusted to match the 6 positions approximately
+        // 1: Top (270 deg)
+        // 2: Top Right (330 deg)
+        // 3: Bottom Right (30 deg) - adjustment for visual layout
+        // 4: Bottom (90 deg)
+        // 5: Bottom Left (150 deg)
+        // 6: Top Left (210 deg)
+        
+        // Using approximate coordinates based on the HTML absolute positioning to draw lines to centers
+        const hubRadius = 70; // 140px width / 2
+        const nodeIconRadius = 32; // 64px width / 2
+        
+        // Coordinates of node centers relative to canvas
+        // These are estimates to match the visual layout of div elements
+        const nodes = [
+            { x: 300, y: 52 + 32 },  // Top
+            { x: 500, y: 132 + 32 }, // Top Right
+            { x: 500, y: 336 + 32 }, // Bottom Right
+            { x: 300, y: 416 + 32 }, // Bottom
+            { x: 100, y: 336 + 32 }, // Bottom Left
+            { x: 100, y: 132 + 32 }  // Top Left
+        ];
+
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 5]); // Dashed lines
+
+        nodes.forEach(node => {
+            ctx.beginPath();
+            
+            // Calculate angle to node
+            const angle = Math.atan2(node.y - centerY, node.x - centerX);
+            
+            // Start at hub edge
+            const startX = centerX + Math.cos(angle) * hubRadius;
+            const startY = centerY + Math.sin(angle) * hubRadius;
+            
+            // End at node edge
+            const endX = node.x - Math.cos(angle) * nodeIconRadius;
+            const endY = node.y - Math.sin(angle) * nodeIconRadius;
+
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
+            
+            // Draw a small dot at the intersection with the hub
+            ctx.beginPath();
+            ctx.arc(startX, startY, 4, 0, Math.PI * 2);
+            ctx.fillStyle = '#1e3a5f';
+            ctx.fill();
+        });
+        
+        // Draw outer connecting ring (optional, connects nodes to each other)
+        ctx.beginPath();
+        ctx.strokeStyle = '#f1f5f9';
+        ctx.lineWidth = 150; // Thick faint ring
+        ctx.arc(centerX, centerY, 200, 0, Math.PI * 2);
+        ctx.stroke();
+    </script>
+</body>
+</html>

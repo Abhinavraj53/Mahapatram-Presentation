@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MahPatram - Slide 15 - Balanced Scorecard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f1f5f9; 
+        }
+        .slide-container { 
+            width: 1280px; 
+            height: 720px; 
+            background-color: #ffffff; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+        }
+        h1, h2, h3, h4, h5, h6 { 
+            font-family: 'Montserrat', sans-serif; 
+        }
+        .accent-bar { 
+            background-color: #1e3a5f; 
+            width: 12px; 
+            height: 100%; 
+            position: absolute; 
+            left: 0; 
+            top: 0; 
+        }
+        
+        /* Logo Component */
+        .logo-container {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            width: 120px;
+            height: 120px;
+        }
+        
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Optimized Scorecard Grid */
+        .scorecard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 12px;
+            height: 100%;
+        }
+
+        .card-quadrant {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.2s ease;
+            overflow: hidden;
+        }
+
+        .card-quadrant:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Quadrant Specific Accents */
+        .quad-financial { 
+            border-top: 4px solid #1e3a5f; 
+        }
+        
+        .quad-strategic { 
+            border-top: 4px solid #f97316; 
+        }
+        
+        .quad-operational { 
+            border-top: 4px solid #64748b; 
+        }
+        
+        .quad-people { 
+            border-top: 4px solid #10b981; 
+        }
+
+        .quad-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .quad-icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .quad-financial .quad-icon-box { 
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); 
+            color: #1e3a5f; 
+        }
+        
+        .quad-strategic .quad-icon-box { 
+            background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%); 
+            color: #ea580c; 
+        }
+        
+        .quad-operational .quad-icon-box { 
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); 
+            color: #475569; 
+        }
+        
+        .quad-people .quad-icon-box { 
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); 
+            color: #059669; 
+        }
+
+        .quad-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .quad-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #1e3a5f;
+            margin-bottom: 0.25rem;
+        }
+
+        .quad-subtitle {
+            font-size: 0.82rem;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        .metric-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .metric-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            gap: 0.75rem;
+        }
+
+        .metric-icon {
+            font-size: 0.9rem;
+            width: 18px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        
+        .quad-financial .metric-icon { color: #1e3a5f; }
+        .quad-strategic .metric-icon { color: #f97316; }
+        .quad-operational .metric-icon { color: #64748b; }
+        .quad-people .metric-icon { color: #10b981; }
+
+        .metric-text {
+            font-size: 0.9rem;
+            color: #334155;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        /* Insight Box */
+        .insight-box {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-left: 4px solid #1e3a5f;
+            padding: 0.875rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            margin-top: 0.75rem;
+        }
+
+        .insight-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #1e3a5f;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .insight-text {
+            font-size: 0.9rem;
+            color: #334155;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container shadow-2xl">
+<!-- Left vertical accent bar -->
+<div class="accent-bar"></div>
+
+<!-- Logo -->
+<div class="logo-container">
+<img src="Mahapatram Logo.png" alt="MahPatram Logo" />
+</div>
+
+<!-- Header -->
+<div class="pt-10 pl-24 pr-40 mb-3">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-2 h-8 bg-[#10b981]"></div>
+<p class="text-[#64748b] font-bold tracking-widest uppercase text-sm">Impact Framework</p>
+</div>
+<h1 class="text-4xl font-extrabold text-[#1e3a5f] leading-tight w-3/4">
+            How We Measure <span class="text-[#10b981]">Success</span>
+        </h1>
+</div>
+
+<!-- Main Content -->
+<div class="flex flex-1 px-24 pb-4 gap-8 overflow-hidden">
+<!-- Left Side: Insight & Context -->
+<div class="w-1/4 pt-4 flex flex-col">
+<div class="mb-4">
+<p class="text-[#475569] text-[1rem] leading-relaxed mb-4 font-medium">
+                    Transformation ROI isn't just financial—it's systemic. We deploy a balanced scorecard to track value across four critical dimensions.
+                </p>
+<p class="text-[#64748b] text-[0.9rem] italic border-l-2 border-[#cbd5e1] pl-3 py-1">
+                    "If you can't measure the behavior change, you can't claim the financial result."
+                </p>
+</div>
+
+<!-- Insight Box -->
+<div class="insight-box mt-auto">
+<p class="insight-title">
+<i class="fas fa-lightbulb text-[#f97316]"></i> Key Insight
+            </p>
+<p class="insight-text">
+                <span class="text-[#10b981]">People &amp; Operational metrics</span> are leading indicators. <span class="text-[#1e3a5f]">Financial metrics</span> are lagging indicators. We track both to predict outcomes before they hit the P&amp;L.
+            </p>
+</div>
+</div>
+
+<!-- Right Side: The Scorecard Grid -->
+<div class="w-3/4 relative">
+<div class="scorecard-grid">
+<!-- Quadrant 1: Financial (Top Left) -->
+<div class="card-quadrant quad-financial">
+<div class="quad-header">
+<div class="quad-icon-box">
+<i class="fas fa-chart-line"></i>
+</div>
+<span class="quad-label">Q1</span>
+</div>
+<h3 class="quad-title">Financial Impact</h3>
+<p class="quad-subtitle">Lagging Value Indicators</p>
+<ul class="metric-list">
+<li class="metric-item">
+<i class="fas fa-money-bill-wave metric-icon"></i>
+<span class="metric-text">ROI Realization</span>
+</li>
+<li class="metric-item">
+<i class="fas fa-hand-holding-usd metric-icon"></i>
+<span class="metric-text">Cost Avoidance</span>
+</li>
+<li class="metric-item">
+<i class="fas fa-arrow-trend-up metric-icon"></i>
+<span class="metric-text">Revenue Uplift</span>
+</li>
+</ul>
+</div>
+
+<!-- Quadrant 2: Strategic (Top Right) -->
+<div class="card-quadrant quad-strategic">
+<div class="quad-header">
+<div class="quad-icon-box">
+<i class="fas fa-chess"></i>
+</div>
+<span class="quad-label">Q2</span>
+</div>
+<h3 class="quad-title">Strategic Value</h3>
+<p class="quad-subtitle">Future Readiness</p>
+<ul class="metric-list">
+<li class="metric-item">
+<i class="fas fa-globe metric-icon"></i>
+<span class="metric-text">Market Position</span>
+</li>
+<li class="metric-item">
+<i class="fas fa-rocket metric-icon"></i>
+<span class="metric-text">Innovation Velocity</span>
+</li>
+<li class="metric-item">
+<i class="fas fa-shield-halved metric-icon"></i>
+<span class="metric-text">Brand Equity / Reputation</span>
+</li>
+</ul>
+</div>
+
+<!-- Quadrant 3: Operational (Bottom Left) -->
+<div class="card-quadrant quad-operational">
+<div class="quad-header">
+<div class="quad-icon-box">
+<i class="fas fa-cogs"></i>
+</div>
+<span class="quad-label">Q3</span>
+</div>
+<h3 class="quad-title">Operational Excellence</h3>
+<p class="quad-subtitle">Efficiency &amp; Speed</p>
+<ul class="metric-list">
+<li class="metric-item">
+<i class="fas fa-stopwatch metric-icon"></i>
+<span class="metric-text">Cycle Time Reduction</span>
+</li>
+<li class="metric-item">
+<i class="fas fa-truck-fast metric-icon"></i>
+<span class="metric-text">Deployment Frequency</span>
+</li>
+<li class="metric-item">
+<i class="fas fa-bolt metric-icon"></i>
+<span class="metric-text">Decision Speed</span>
+</li>
+</ul>
+</div>
+
+<!-- Quadrant 4: People (Bottom Right) -->
+<div class="card-quadrant quad-people">
+<div class="quad-header">
+<div class="quad-icon-box">
+<i class="fas fa-users"></i>
+</div>
+<span class="quad-label">Q4</span>
+</div>
+<h3 class="quad-title">People &amp; Culture</h3>
+<p class="quad-subtitle">Adoption &amp; Capacity</p>
+<ul class="metric-list">
+<li class="metric-item">
+<i class="fas fa-heart-pulse metric-icon"></i>
+<span class="metric-text">Engagement Score</span>
+</li>
+<li class="metric-item">
+<i class="fas fa-user-check metric-icon"></i>
+<span class="metric-text">Key Talent Retention</span>
+</li>
+<li class="metric-item">
+<i class="fas fa-people-arrows metric-icon"></i>
+<span class="metric-text">Leadership Alignment Index</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Slide Number -->
+<div class="absolute bottom-4 right-8 text-[#94a3b8] text-sm font-semibold">15</div>
+</div>
+</body>
+</html>

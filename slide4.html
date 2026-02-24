@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MahPatram - Slide 4</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Open Sans', sans-serif; background-color: #f1f5f9; margin: 0; padding: 0; }
+        .slide-container { width: 1280px; height: 720px; background-color: #ffffff; position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
+        .accent-bar { background-color: #1e3a5f; width: 12px; height: 100%; position: absolute; left: 0; top: 0; }
+        
+        /* Logo Component */
+        .logo-container {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            width: 120px;
+            height: 120px;
+        }
+        
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Custom styling for the bridge visualization */
+        .chart-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        /* Insight Box Styling */
+        .insight-box {
+            background-color: #fff;
+            border-left: 4px solid #f97316;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-radius: 0 8px 8px 0;
+            padding: 1rem;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container shadow-2xl">
+<!-- Left vertical accent bar -->
+<div class="accent-bar"></div>
+<!-- Logo -->
+<div class="logo-container">
+<img src="Mahapatram Logo.png" alt="MahPatram Logo" />
+</div>
+<!-- Header -->
+<div class="pt-12 pl-24 pr-40 mb-4 relative z-10">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-2 h-8 bg-[#f97316]"></div>
+<p class="text-[#64748b] font-bold tracking-widest uppercase text-sm">The Adoption Gap</p>
+</div>
+<h1 class="text-4xl font-extrabold text-[#1e3a5f] leading-tight">
+                Transformation Fails at the <span class="text-[#f97316]">Human Layer</span>
+            </h1>
+</div>
+<br/><br/><br/>
+<!-- Main Content -->
+<div class="flex flex-1 px-24 relative">
+<!-- Left Text Context -->
+<div class="w-1/4 pt-8 pr-6 z-10">
+<p class="text-[#475569] text-l leading-relaxed mb-6 font-medium">
+                    Even with perfect technical strategy, the bridge to realization collapses when human systems leadership, teams, and culture are not structurally integrated.
+                </p>
+<div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+<p class="text-[#1e3a5f] font-bold text-xs uppercase mb-2">Top Barrier</p>
+<p class="text-2xl font-extrabold text-[#f97316]">39%</p>
+<p class="text-xs text-[#64748b] mt-1">Cite "Lack of Employee Buy-in" as primary failure cause</p>
+</div>
+</div>
+<!-- Main Chart Area -->
+<div class="w-3/4 h-[450px] relative">
+<div class="w-full h-full" id="waterfallChart"></div>
+<!-- Overlay Insight Box -->
+<!--
+<div class="absolute bottom-12 left-10 insight-box" style="max-width: 300px;">
+<p class="text-[#1e3a5f] font-bold text-xs mb-2 uppercase tracking-wider flex items-center gap-2">
+<i class="fas fa-lightbulb text-[#f97316]"></i> The Breakpoint
+                    </p>
+<p class="text-[#334155] text-sm leading-relaxed font-semibold">
+                        The "Adoption Gap" is the structural weakness where strategy disconnects from behavior, causing value leakage before outcomes are realized.
+                    </p>
+</div>
+-->
+</div>
+</div>
+<!-- Footer Source -->
+<div class="absolute bottom-6 left-24">
+<p class="text-[10px] text-[#94a3b8] uppercase tracking-wide">
+<strong>Sources:</strong> Gartner (Culture as top barrier); Prosci (Sponsorship importance); McKinsey (Digital transformation failure modes).
+            </p>
+</div>
+<!-- Slide Number -->
+<div class="absolute bottom-6 right-8 text-[#94a3b8] text-sm font-semibold">04</div>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var chartDom = document.getElementById('waterfallChart');
+            var myChart = echarts.init(chartDom);
+            var option;
+
+            // Data for Waterfall
+            // Step 1: Strategy Potential (Start) - 100
+            // Step 2: Gap 1 - Employee Buy-in (-39)
+            // Step 3: Gap 2 - Leadership Alignment (-33)
+            // Step 4: Gap 3 - Siloed Execution (-28)
+            // Step 5: Realized Outcome (What's left - heavily eroded)
+
+            // To visually represent the "Gap", we use a waterfall showing the drop.
+            
+            option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    formatter: function (params) {
+                        var tar = params[1];
+                        return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value + '%';
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    top: '10%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    splitLine: { show: false },
+                    data: ['Strategy Potential', 'Employee Buy-in Gap', 'Leadership Alignment Gap', 'Siloed Execution Gap', 'Realized Value'],
+                    axisLabel: {
+                        interval: 0,
+                        rotate: 0,
+                        formatter: function (value) {
+                            return value.split(' ').join('\n');
+                        },
+                        color: '#64748b',
+                        fontWeight: 'bold',
+                        fontFamily: 'Open Sans'
+                    },
+                    axisLine: { show: true, lineStyle: { color: '#cbd5e1' } },
+                    axisTick: { show: false }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'Value Realization Potential (%)',
+                    nameLocation: 'end',
+                    nameTextStyle: {
+                        color: '#94a3b8',
+                        align: 'right',
+                        padding: [0, 0, 0, 0]
+                    },
+                    max: 100,
+                    splitLine: { 
+                        lineStyle: { type: 'dashed', color: '#e2e8f0' }
+                    },
+                    axisLabel: { color: '#94a3b8' }
+                },
+                series: [
+                    {
+                        name: 'Placeholder',
+                        type: 'bar',
+                        stack: 'Total',
+                        itemStyle: {
+                            borderColor: 'transparent',
+                            color: 'transparent'
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                borderColor: 'transparent',
+                                color: 'transparent'
+                            }
+                        },
+                        // The 'base' of the floating bars
+                        data: [0, 61, 28, 0, 0] 
+                        // Strategy: Starts at 0, height 100
+                        // Buy-in: Starts at 100-39=61
+                        // Leadership: Starts at 61-33=28
+                        // Silos: Starts at 28-28=0
+                        // Result: Starts at 0
+                    },
+                    {
+                        name: 'Value Potential / Result',
+                        type: 'bar',
+                        stack: 'Total',
+                        label: {
+                            show: true,
+                            position: 'top',
+                            color: '#1e3a5f',
+                            fontWeight: 'bold',
+                            formatter: '{c}%'
+                        },
+                        itemStyle: {
+                            color: function(params) {
+                                if (params.dataIndex === 0) return '#1e3a5f'; // Navy for Strategy
+                                if (params.dataIndex === 4) return '#94a3b8'; // Grey for Result (Failed)
+                                return '#f97316'; // Orange for drops
+                            }
+                        },
+                        // The height of the bars
+                        data: [
+                            100, // Strategy
+                            0,   // Gap 1 (Handled by next series for color diff? No, waterfall uses same series usually, but let's use separate for clarity)
+                            0,   // Gap 2
+                            0,   // Gap 3
+                            10   // Result (Small residual value for visual effect, though mathematically 0 based on prompt weights)
+                        ]
+                    },
+                    {
+                        name: 'Erosion Factors',
+                        type: 'bar',
+                        stack: 'Total',
+                        label: {
+                            show: true,
+                            position: 'inside',
+                            formatter: '-{c}%',
+                            color: '#fff',
+                            fontWeight: 'bold'
+                        },
+                        itemStyle: {
+                            color: '#ef4444', // Red/Orange for the drops
+                            shadowBlur: 10,
+                            shadowColor: 'rgba(239, 68, 68, 0.2)'
+                        },
+                        data: [
+                            0,  // Strategy
+                            39, // Buy-in Gap
+                            33, // Leadership Gap
+                            28, // Silos Gap
+                            0   // Result
+                        ]
+                    }
+                ]
+            };
+            
+            // Adjusting the placeholder calculation to match the visual logic
+            // Start: 100
+            // Step 1: Drop 39. Top is 100, Bottom is 61. Placeholder height = 61. Bar height = 39.
+            // Step 2: Drop 33. Top is 61, Bottom is 28. Placeholder height = 28. Bar height = 33.
+            // Step 3: Drop 28. Top is 28, Bottom is 0. Placeholder height = 0. Bar height = 28.
+            // End: Result is low.
+            
+            option.series[0].data = [0, 61, 28, 0, 0]; // Invisible base
+            option.series[1].data = [100, '-', '-', '-', 10]; // Primary Columns (Start/End)
+            option.series[2].data = ['-', 39, 33, 28, '-']; // Negative Steps
+
+            // Fix colors for series 1 to handle the "-" values
+            option.series[1].itemStyle.color = function(params) {
+                if (params.dataIndex === 0) return '#1e3a5f'; // Strategy
+                if (params.dataIndex === 4) return '#64748b'; // Result (Failed)
+                return 'transparent';
+            };
+
+            myChart.setOption(option);
+        });
+    </script>
+</body>
+</html>

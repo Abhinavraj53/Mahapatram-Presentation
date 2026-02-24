@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MahPatram - Slide 22 - When to Engage</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&amp;family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; background-color: #f1f5f9; }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
+        .accent-bar { background-color: #1e3a5f; width: 12px; height: 100%; position: absolute; left: 0; top: 0; }
+
+        /* Logo Component */
+        .logo-container {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            width: 120px;
+            height: 120px;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Card Layout */
+        .cards-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 0 64px 20px 64px;
+            flex: 1;
+            align-items: stretch;
+        }
+
+        .inflection-card {
+            flex: 1;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #1e3a5f;
+            border-radius: 0 0 8px 8px;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .inflection-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            border-top-color: #f97316;
+        }
+
+        .card-number {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            font-size: 3rem;
+            font-weight: 800;
+            color: #f1f5f9;
+            line-height: 1;
+            z-index: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .icon-circle {
+            width: 64px;
+            height: 64px;
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            z-index: 1;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .icon-circle i {
+            font-size: 30px;
+            color: #1e3a5f;
+        }
+
+        .inflection-card:hover .icon-circle i {
+            color: #f97316;
+        }
+
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #1e3a5f;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .card-desc {
+            font-size: 1rem;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            z-index: 1;
+        }
+
+        .trigger-box {
+            margin-top: auto;
+            background-color: #ecfdf5;
+            padding: 8px 12px;
+            border-radius: 6px;
+            width: 100%;
+        }
+
+        .trigger-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #166534;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .trigger-text {
+            font-size: 0.75rem;
+            color: #1e3a5f;
+            font-weight: 600;
+        }
+
+        /* Bottom Insight */
+        .insight-bar {
+            margin: 0 64px 32px 64px;
+            background-color: #fff7ed;
+            border-left: 4px solid #f97316;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+    </style>
+</head>
+<body>
+<div class="slide-container shadow-2xl">
+<!-- Left vertical accent bar -->
+<div class="accent-bar"></div>
+<!-- Logo -->
+<div class="logo-container">
+<img src="Mahapatram Logo.png" alt="MahPatram Logo" />
+</div>
+<!-- Header -->
+<div class="pt-10 pl-24 pr-40 mb-8">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-2 h-8 bg-[#1e3a5f]"></div>
+<p class="text-[#64748b] font-bold tracking-widest uppercase text-sm">Engagement Strategy</p>
+</div>
+<div class="flex justify-between items-end">
+<h1 class="text-4xl font-extrabold text-[#1e3a5f] leading-tight">
+                    When to Engage <span class="text-[#f97316]">MahPatram</span>
+</h1>
+<div class="bg-slate-100 px-4 py-2 rounded text-sm font-semibold text-slate-600">
+<i class="fas fa-bullseye text-slate-400 mr-2"></i> 5 Strategic Inflection Points
+                </div>
+</div>
+</div>
+<!-- Cards Container -->
+<div class="cards-container">
+<!-- Card 1 -->
+<div class="inflection-card">
+<div class="card-number">01</div>
+<div class="icon-circle">
+<i class="fas fa-clipboard-check"></i>
+</div>
+<h3 class="card-title">Strategy Stress Test</h3>
+<p class="card-desc">
+                    Before large-scale deployment. Validate organizational readiness and adoption capacity to prevent "strategy-execution gap."
+                </p>
+<div class="trigger-box">
+<span class="trigger-label">Trigger</span>
+<p class="trigger-text">Pre-Transformation Planning</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="inflection-card">
+<div class="card-number">02</div>
+<div class="icon-circle">
+<i class="fas fa-life-ring"></i>
+</div>
+<h3 class="card-title">Mid-Transformation Stall</h3>
+<p class="card-desc">
+                    Rescue &amp; Reboot. When programs hit "the wall" of resistance. Diagnostic intervention to unblock bottlenecks.
+                </p>
+<div class="trigger-box">
+<span class="trigger-label">Trigger</span>
+<p class="trigger-text">Delayed Milestones</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="inflection-card">
+<div class="card-number">03</div>
+<div class="icon-circle">
+<i class="fas fa-handshake"></i>
+</div>
+<h3 class="card-title">Post-Merger Integration</h3>
+<p class="card-desc">
+                    Cultural alignment. Moving from "us vs. them" to a unified enterprise narrative. Retention of key acquired talent.
+                </p>
+<div class="trigger-box">
+<span class="trigger-label">Trigger</span>
+<p class="trigger-text">M&amp;A Day 1 to Day 100</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="inflection-card">
+<div class="card-number">04</div>
+<div class="icon-circle">
+<i class="fas fa-user-tie"></i>
+</div>
+<h3 class="card-title">Leadership Transition</h3>
+<p class="card-desc">
+                    New CEO or CXO team onboarding. Accelerating the "storming to performing" cycle for high-stakes leadership teams.
+                </p>
+<div class="trigger-box">
+<span class="trigger-label">Trigger</span>
+<p class="trigger-text">Executive Succession</p>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="inflection-card">
+<div class="card-number">05</div>
+<div class="icon-circle">
+<i class="fas fa-globe"></i>
+</div>
+<h3 class="card-title">Culture Scale-Up</h3>
+<p class="card-desc">
+                    Operationalizing values. Moving culture from "posters on the wall" to observable behaviors in the hall at enterprise scale.
+                </p>
+<div class="trigger-box">
+<span class="trigger-label">Trigger</span>
+<p class="trigger-text">Rapid Growth / IPO</p>
+</div>
+</div>
+</div>
+<!-- Insight Bar -->
+<div class="insight-bar">
+<div class="flex items-center justify-center w-10 h-10 rounded-full bg-orange-100 text-[#f97316] flex-shrink-0">
+<i class="fas fa-lightbulb text-lg"></i>
+</div>
+<div>
+<p class="text-[#1e3a5f] font-bold text-sm uppercase tracking-wide mb-1">Decision Insight</p>
+<p class="text-[#475569] text-sm font-medium">
+                    The cost of intervention is lowest at the start (Point 1), but the perceived need is often highest at the stall (Point 2).
+                    <span class="font-bold text-[#1e3a5f]">Proactive engagement protects ROI.</span>
+</p>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="absolute bottom-6 right-8 text-[#94a3b8] text-sm font-semibold">22</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MahPatram - Slide 24 - How We Begin</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&amp;family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; background-color: #f1f5f9; }
+        .slide-container { 
+            width: 1280px; 
+            height: 720px; 
+            background-color: #ffffff; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
+        .accent-bar { background-color: #1e3a5f; width: 12px; height: 100%; position: absolute; left: 0; top: 0; }
+        
+        /* Logo Component */
+        .logo-container {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            width: 120px;
+            height: 120px;
+        }
+        
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Process Flow Styles */
+        .process-container {
+            flex: 1;
+            padding: 20px 64px 40px 64px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .step-wrapper {
+            display: flex;
+            position: relative;
+            gap: 24px;
+            align-items: stretch;
+            height: 100%;
+        }
+
+        /* Step Card */
+        .step-card {
+            flex: 1;
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 32px 24px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            z-index: 10;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #cbd5e1;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: #cbd5e1;
+            border-radius: 8px 8px 0 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .step-card.active::before { background-color: #1e3a5f; }
+        .step-card.pilot::before { background-color: #10b981; }
+
+        /* Step Number */
+        .step-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            color: #f1f5f9;
+            line-height: 1;
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 0;
+        }
+
+        /* Connecting Arrows */
+        .connector {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #cbd5e1;
+            font-size: 1.5rem;
+            z-index: 1;
+        }
+        
+        .connector.c1 { left: 32%; }
+        .connector.c2 { left: 66%; }
+
+        /* Step Content */
+        .step-icon-box {
+            width: 56px;
+            height: 56px;
+            background-color: #f8fafc;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            z-index: 1;
+            border: 1px solid #e2e8f0;
+        }
+
+        .step-icon-box i {
+            font-size: 24px;
+            color: #1e3a5f;
+        }
+
+        .step-duration {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .step-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .step-desc {
+            font-size: 0.85rem;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            flex: 1;
+        }
+
+        .step-deliverables {
+            background-color: #f8fafc;
+            border-radius: 6px;
+            padding: 12px;
+            border-left: 3px solid #cbd5e1;
+        }
+
+        .deliverable-title {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .deliverable-item {
+            font-size: 0.75rem;
+            color: #334155;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .deliverable-item i {
+            margin-top: 3px;
+            font-size: 0.6rem;
+            color: #1e3a5f;
+        }
+
+        /* Insight Bar */
+        .insight-bar {
+            margin: 0 64px 32px 64px;
+            background-color: #ecfdf5;
+            border-left: 4px solid #10b981;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        
+        .insight-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .insight-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            border-left: 1px solid #a7f3d0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container shadow-2xl">
+<!-- Left vertical accent bar -->
+<div class="accent-bar"></div>
+<!-- Logo -->
+<div class="logo-container">
+<img src="Mahapatram Logo.png" alt="MahPatram Logo" />
+</div>
+<!-- Header -->
+<div class="pt-10 pl-24 pr-40 mb-8">
+<div class="flex items-center gap-2 mb-2">
+<div class="w-2 h-8 bg-[#1e3a5f]"></div>
+<p class="text-[#64748b] font-bold tracking-widest uppercase text-sm">Engagement Process</p>
+</div>
+<div class="flex justify-between items-end">
+<h1 class="text-4xl font-extrabold text-[#1e3a5f] leading-tight">
+                    How We <span class="text-[#f97316]">Begin</span>
+</h1>
+<div class="bg-slate-100 px-4 py-2 rounded text-sm font-semibold text-slate-600">
+<i class="fas fa-handshake text-slate-400 mr-2"></i> Diagnostic-First Partnership Model
+                </div>
+</div>
+</div>
+<!-- Main Process Content -->
+<div class="process-container">
+<div class="step-wrapper">
+<!-- Step 1 -->
+<div class="step-card active">
+<div class="step-number">01</div>
+<div class="step-icon-box">
+<i class="fas fa-search"></i>
+</div>
+<div class="step-duration">
+<i class="far fa-clock text-[#f97316]"></i> 2 Weeks
+                    </div>
+<h3 class="step-title">Diagnostic &amp; Discovery</h3>
+<p class="step-desc">
+                        We don't guess; we diagnose. Rapid assessment of the adoption landscape through stakeholder interviews and organizational listening.
+                    </p>
+<div class="step-deliverables" style="border-left-color: #1e3a5f;">
+<span class="deliverable-title">Key Activities</span>
+<div class="deliverable-item">
+<i class="fas fa-check"></i>
+<span>Stakeholder Interviews (1:1)</span>
+</div>
+<div class="deliverable-item">
+<i class="fas fa-check"></i>
+<span>Adoption Readiness Audit</span>
+</div>
+<div class="deliverable-item">
+<i class="fas fa-check"></i>
+<span>Barrier Identification</span>
+</div>
+</div>
+</div>
+<!-- Connector Arrow 1 -->
+<div class="absolute top-1/2 left-[31.5%] transform -translate-y-1/2 text-slate-300 z-0">
+<i class="fas fa-chevron-right text-3xl"></i>
+</div>
+<!-- Step 2 -->
+<div class="step-card active">
+<div class="step-number">02</div>
+<div class="step-icon-box">
+<i class="fas fa-chess-board"></i>
+</div>
+<div class="step-duration">
+<i class="far fa-clock text-[#f97316]"></i> 1 Day
+                    </div>
+<h3 class="step-title">Strategy Session</h3>
+<p class="step-desc">
+                        A collaborative workshop to mirror back findings and co-design a fit-for-purpose intervention strategy. Not a pitch, but a working session.
+                    </p>
+<div class="step-deliverables" style="border-left-color: #1e3a5f;">
+<span class="deliverable-title">Key Activities</span>
+<div class="deliverable-item">
+<i class="fas fa-check"></i>
+<span>Diagnostic Playback</span>
+</div>
+<div class="deliverable-item">
+<i class="fas fa-check"></i>
+<span>Intervention Co-Design</span>
+</div>
+<div class="deliverable-item">
+<i class="fas fa-check"></i>
+<span>Pilot Scope Definition</span>
+</div>
+</div>
+</div>
+<!-- Connector Arrow 2 -->
+<div class="absolute top-1/2 left-[65%] transform -translate-y-1/2 text-slate-300 z-0">
+<i class="fas fa-chevron-right text-3xl"></i>
+</div>
+<!-- Step 3 -->
+<div class="step-card pilot">
+<div class="step-number">03</div>
+<div class="step-icon-box bg-green-50 border-green-100">
+<i class="fas fa-rocket text-[#10b981]"></i>
+</div>
+<div class="step-duration text-[#10b981]">
+<i class="far fa-clock"></i> 3 Months
+                    </div>
+<h3 class="step-title text-[#065f46]">Pilot Commitment</h3>
+<p class="step-desc">
+                        Test the intervention in a contained "pressure cooker" environment. Measure impact before committing to enterprise-wide scale.
+                    </p>
+<div class="step-deliverables" style="border-left-color: #10b981; background-color: #f0fdf4;">
+<span class="deliverable-title text-[#166534]">Outcomes</span>
+<div class="deliverable-item text-[#14532d]">
+<i class="fas fa-check text-[#10b981]"></i>
+<span>Proof of Concept</span>
+</div>
+<div class="deliverable-item text-[#14532d]">
+<i class="fas fa-check text-[#10b981]"></i>
+<span>Initial ROI Measurement</span>
+</div>
+<div class="deliverable-item text-[#14532d]">
+<i class="fas fa-check text-[#10b981]"></i>
+<span>Go/No-Go Decision Point</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Insight Bar -->
+<div class="insight-bar">
+<div class="insight-content">
+<div class="flex items-center justify-center w-10 h-10 rounded-full bg-white text-[#10b981] flex-shrink-0 border border-green-200">
+<i class="fas fa-lock-open text-lg"></i>
+</div>
+<div>
+<p class="text-[#065f46] font-bold text-sm uppercase tracking-wide mb-1">Engagement Philosophy</p>
+<p class="text-[#1e3a5f] text-sm font-medium">
+                        Low-risk entry, high-confidence scaling. We earn the right to scale by <span class="font-bold border-b-2 border-green-200">demonstrating value in the pilot</span>.
+                    </p>
+</div>
+</div>
+<div class="insight-stat">
+<span class="text-2xl font-bold text-[#1e3a5f]">80%</span>
+<span class="text-[0.65rem] font-bold text-slate-500 uppercase tracking-wide">Conversion to Scale</span>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="absolute bottom-6 right-8 text-[#94a3b8] text-sm font-semibold">24</div>
+</div>
+</body>
+</html>

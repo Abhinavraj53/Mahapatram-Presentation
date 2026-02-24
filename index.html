@@ -1,0 +1,2184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>MahPatram Consulting - Slide Deck</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;600&display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #1e3a5f;
+        }
+
+        .slideshow-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: #f1f5f9;
+        }
+
+        .slide-frame {
+            width: 1280px;
+            height: 720px;
+            border: none;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background-color: #ffffff;
+            transition: opacity 0.3s ease;
+        }
+
+        .slide-frame.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(30, 58, 95, 0.8);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .nav-button:hover {
+            background-color: rgba(30, 58, 95, 1);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-button:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .nav-button.prev {
+            left: 30px;
+        }
+
+        .nav-button.next {
+            right: 30px;
+        }
+
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-button:disabled:hover {
+            transform: translateY(-50%);
+        }
+
+        .slide-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 12px 24px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .slide-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slide-dot.active {
+            background-color: #1e3a5f;
+            width: 32px;
+            border-radius: 6px;
+        }
+
+        .slide-dot:hover {
+            background-color: #64748b;
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #1e3a5f;
+            font-weight: 600;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .slide-title {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #1e3a5f;
+            font-weight: 600;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .exit-button {
+            position: absolute;
+            top: 30px;
+            right: 120px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #1e3a5f;
+            font-weight: 600;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .exit-button:hover {
+            background-color: #1e3a5f;
+            color: white;
+        }
+
+        /* Export Button Styles */
+        .export-button {
+            position: absolute;
+            top: 30px;
+            right: 200px;
+            z-index: 100;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5);
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+        }
+
+        .export-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .export-dropdown.show {
+            display: block;
+        }
+
+        .export-option {
+            padding: 12px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background-color 0.2s;
+            color: #1e3a5f;
+            font-weight: 500;
+        }
+
+        .export-option:hover {
+            background-color: #f1f5f9;
+        }
+
+        .export-option i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            flex-direction: column;
+            gap: 20px;
+            color: white;
+            font-size: 18px;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Editor Mode Styles */
+        .editor-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .editor-mode.active {
+            display: flex;
+        }
+
+        .editor-container {
+            width: 90%;
+            height: 90%;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .editor-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .editor-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .editor-sidebar {
+            width: 300px;
+            border-right: 1px solid #e2e8f0;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+
+        .editor-canvas {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: auto;
+            background: #f1f5f9;
+        }
+
+        .editor-slide-frame {
+            width: 1280px;
+            height: 720px;
+            border: 2px solid #cbd5e1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: white;
+            display: block;
+        }
+
+        .editor-canvas-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .editor-slide-container {
+            position: relative;
+            transform-origin: center center;
+            display: inline-block;
+        }
+
+        .editor-toolbar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .editor-btn {
+            padding: 8px 16px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .editor-btn:hover {
+            background: #f1f5f9;
+            border-color: #1e3a5f;
+        }
+
+        .editor-btn.primary {
+            background: #1e3a5f;
+            color: white;
+            border-color: #1e3a5f;
+        }
+
+        .editor-btn.primary:hover {
+            background: #0f172a;
+        }
+
+        .property-group {
+            margin-bottom: 20px;
+        }
+
+        .property-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .property-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .property-color {
+            width: 100%;
+            height: 40px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .editable-element {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .editable-element:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .editable-box {
+            position: absolute;
+            border: 2px dashed #1e3a5f;
+            background: rgba(30, 58, 95, 0.05);
+            cursor: move;
+            z-index: 1000;
+            box-sizing: border-box;
+            pointer-events: auto;
+            user-select: none;
+        }
+
+        .editable-box.selected {
+            border-color: #f97316;
+            border-width: 2px;
+            background: rgba(249, 115, 22, 0.1);
+        }
+
+        .editable-box.dragging {
+            opacity: 0.8;
+            cursor: grabbing;
+            z-index: 10000;
+        }
+
+        .editable-box * {
+            pointer-events: none;
+        }
+
+        .editable-box .resize-handle {
+            pointer-events: auto;
+        }
+
+        .editable-box .resize-handle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #1e3a5f;
+            border: 2px solid white;
+            border-radius: 50%;
+            cursor: nwse-resize;
+        }
+
+        .editable-box .resize-handle.top-left {
+            top: -4px;
+            left: -4px;
+            cursor: nwse-resize;
+        }
+
+        .editable-box .resize-handle.top-right {
+            top: -4px;
+            right: -4px;
+            cursor: nesw-resize;
+        }
+
+        .editable-box .resize-handle.bottom-left {
+            bottom: -4px;
+            left: -4px;
+            cursor: nesw-resize;
+        }
+
+        .editable-box .resize-handle.bottom-right {
+            bottom: -4px;
+            right: -4px;
+            cursor: nwse-resize;
+        }
+
+        .editable-box .resize-handle.top {
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: ns-resize;
+        }
+
+        .editable-box .resize-handle.bottom {
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: ns-resize;
+        }
+
+        .editable-box .resize-handle.left {
+            left: -4px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: ew-resize;
+        }
+
+        .editable-box .resize-handle.right {
+            right: -4px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: ew-resize;
+        }
+
+        @media (max-width: 1400px) {
+            .slide-frame {
+                transform: scale(0.8);
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .slide-frame {
+                transform: scale(0.6);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slideshow-container">
+        <!-- Slide Frames -->
+        <iframe id="slideFrame" class="slide-frame" src="slide1.html"></iframe>
+
+        <!-- Navigation Buttons -->
+        <button class="nav-button prev" id="prevBtn" onclick="changeSlide(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav-button next" id="nextBtn" onclick="changeSlide(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Slide Title -->
+        <div class="slide-title" id="slideTitle">MahPatram Consulting</div>
+
+        <!-- Exit Button -->
+        <div class="exit-button" onclick="exitFullscreen()">
+            <i class="fas fa-times"></i> Exit
+        </div>
+
+        <!-- Export Button -->
+        <div class="export-button">
+            <button class="export-btn" onclick="toggleExportDropdown()">
+                <i class="fas fa-download"></i> Export
+            </button>
+            <div class="export-dropdown" id="exportDropdown">
+                <div class="export-option" onclick="openEditor(); return false;">
+                    <i class="fas fa-edit"></i>
+                    <span>Edit Slides</span>
+                </div>
+                <div class="export-option" onclick="exportAsPDF()">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Export as PDF</span>
+                </div>
+                <div class="export-option" onclick="exportAsPPTX()">
+                    <i class="fas fa-file-powerpoint"></i>
+                    <span>Export as PPTX</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Editor Mode -->
+        <div class="editor-mode" id="editorMode">
+            <div class="editor-container">
+                <div class="editor-header">
+                    <h2 style="margin: 0; font-size: 18px; font-weight: 600;">Slide Editor</h2>
+                    <div class="editor-toolbar">
+                        <button class="editor-btn" onclick="saveEdits()">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <button class="editor-btn primary" onclick="closeEditor()">
+                            <i class="fas fa-times"></i> Close Editor
+                        </button>
+                    </div>
+                </div>
+                <div class="editor-content">
+                    <div class="editor-sidebar">
+                        <div class="property-group">
+                            <div class="property-label">Current Slide</div>
+                            <select class="property-input" id="editorSlideSelect" onchange="loadSlideForEditor()">
+                                <!-- Will be populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="property-group">
+                            <div class="property-label">Selected Element</div>
+                            <div id="selectedElementInfo"
+                                style="padding: 12px; background: white; border-radius: 4px; font-size: 12px; color: #64748b;">
+                                Click on any element to edit
+                            </div>
+                        </div>
+                        <div class="property-group" id="textProperties" style="display: none;">
+                            <div class="property-label">Text Content</div>
+                            <textarea class="property-input" id="editTextContent" rows="3"
+                                onchange="updateSelectedElement()"></textarea>
+                            <div class="property-label" style="margin-top: 12px;">Font Size</div>
+                            <input type="number" class="property-input" id="editFontSize" min="8" max="72"
+                                onchange="updateSelectedElement()">
+                            <div class="property-label" style="margin-top: 12px;">Text Color</div>
+                            <input type="color" class="property-color" id="editTextColor"
+                                onchange="updateSelectedElement()">
+                            <div class="property-label" style="margin-top: 12px;">Font Weight</div>
+                            <select class="property-input" id="editFontWeight" onchange="updateSelectedElement()">
+                                <option value="400">Normal</option>
+                                <option value="600">Semi-Bold</option>
+                                <option value="700">Bold</option>
+                                <option value="800">Extra Bold</option>
+                            </select>
+                        </div>
+                        <div class="property-group" id="positionProperties" style="display: none;">
+                            <div class="property-label">Position</div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                <div>
+                                    <label style="font-size: 11px; color: #64748b;">X (px)</label>
+                                    <input type="number" class="property-input" id="editX"
+                                        onchange="updateSelectedElement()">
+                                </div>
+                                <div>
+                                    <label style="font-size: 11px; color: #64748b;">Y (px)</label>
+                                    <input type="number" class="property-input" id="editY"
+                                        onchange="updateSelectedElement()">
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+                                <div>
+                                    <label style="font-size: 11px; color: #64748b;">Width (px)</label>
+                                    <input type="number" class="property-input" id="editWidth"
+                                        onchange="updateSelectedElement()">
+                                </div>
+                                <div>
+                                    <label style="font-size: 11px; color: #64748b;">Height (px)</label>
+                                    <input type="number" class="property-input" id="editHeight"
+                                        onchange="updateSelectedElement()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="editor-canvas">
+                        <div class="editor-canvas-wrapper" id="editorCanvasWrapper">
+                            <div class="editor-slide-container" id="editorSlideContainer">
+                                <iframe id="editorSlideFrame" class="editor-slide-frame" src=""></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner"></div>
+            <div id="loadingText">Generating PDF...</div>
+        </div>
+
+        <!-- Slide Counter -->
+        <div class="slide-counter" id="slideCounter">1 / 5</div>
+
+        <!-- Slide Indicators -->
+        <div class="slide-indicator" id="slideIndicator"></div>
+    </div>
+
+    <script>
+        // Slide configuration
+        const slides = [
+            { file: 'slide1.html', title: 'Cover - Bridging Strategy and Adoption' },
+            { file: 'slide2.html', title: 'The Transformation Paradox' },
+            { file: 'slide3.html', title: 'The Misdiagnosis' },
+            { file: 'slide4.html', title: 'The Adoption Gap' },
+            { file: 'Slide5.html', title: 'The Cost of Misalignment' },
+            { file: 'Slide6.html', title: 'Slide 6' },
+            { file: 'Slide7.html', title: 'Section Divider' },
+            { file: 'Slide8.html', title: 'The MahPatram Framework' },
+            { file: 'Slide9.html', title: '2x2 Positioning Matrix' },
+            { file: 'Slide10.html', title: 'Methodology Ecosystem' },
+            { file: 'Slide11.html', title: 'Engagement Model' },
+            { file: 'Slide12.html', title: 'Org Stakeholder Map' },
+            { file: 'Slide13.html', title: 'Three-Column Comparison' },
+            { file: 'Slide14.html', title: 'Section Divider - Client Impact' },
+            { file: 'Slide15.html', title: 'Balanced Scorecard' },
+            { file: 'Slide16.html', title: 'Case Study 1 - Technology Services' },
+            { file: 'Slide17.html', title: 'Case Study 2 - Financial Services' },
+            { file: 'Slide18.html', title: 'Case Study 3 - Manufacturing & Industrial' },
+            { file: 'Slide19.html', title: 'Case Study 4 - Financial Services & Banking' },
+            { file: 'Slide20.html', title: 'Case Study 5 - Life Sciences & Pharma' },
+            { file: 'Slide21A.html', title: 'Pattern 1 - Leadership Alignment' },
+            { file: 'Slide21B.html', title: 'Pattern 2 - Adoption Investment Mix' },
+            { file: 'Slide21C.html', title: 'Pattern 3 - Duration & ROI Compounding' },
+            { file: 'Slide21D.html', title: 'Pattern 4 - The Manager Multiplier' },
+            { file: 'Slide22.html', title: 'When to Engage' },
+            { file: 'Slide23.html', title: 'The Team' },
+            { file: 'Slide24.html', title: 'How We Begin' },
+            { file: 'Slide25.html', title: 'Contact & Closing' }
+        ];
+
+        let currentSlide = 0;
+
+        // Initialize slide indicators
+        function initIndicators() {
+            const indicator = document.getElementById('slideIndicator');
+            indicator.innerHTML = '';
+            slides.forEach((slide, index) => {
+                const dot = document.createElement('div');
+                dot.className = `slide-dot ${index === currentSlide ? 'active' : ''}`;
+                dot.onclick = () => goToSlide(index);
+                indicator.appendChild(dot);
+            });
+        }
+
+        // Update slide counter
+        function updateCounter() {
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${slides.length}`;
+            document.getElementById('slideTitle').textContent = slides[currentSlide].title;
+        }
+
+        // Change slide - Make globally accessible
+        window.changeSlide = function (direction) {
+            const newIndex = currentSlide + direction;
+            if (newIndex >= 0 && newIndex < slides.length) {
+                currentSlide = newIndex;
+                loadSlide();
+            }
+        };
+
+        // Go to specific slide - Make globally accessible
+        window.goToSlide = function (index) {
+            if (index >= 0 && index < slides.length) {
+                currentSlide = index;
+                loadSlide();
+            }
+        };
+
+        // Load slide
+        function loadSlide() {
+            const frame = document.getElementById('slideFrame');
+            const slideKey = slides[currentSlide].file;
+
+            // Check if this slide has been edited
+            if (editedSlides && editedSlides[slideKey]) {
+                // For now, just load the original - edited slides will be used in export
+                // The main slideshow will show original, but exports will use edited versions
+                frame.src = slideKey;
+            } else {
+                // Load original slide
+                frame.src = slideKey;
+            }
+
+            updateCounter();
+            initIndicators();
+            updateNavButtons();
+        }
+
+        // Update navigation buttons
+        function updateNavButtons() {
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === slides.length - 1;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowLeft':
+                    changeSlide(-1);
+                    break;
+                case 'ArrowRight':
+                case ' ':
+                    e.preventDefault();
+                    changeSlide(1);
+                    break;
+                case 'Home':
+                    goToSlide(0);
+                    break;
+                case 'End':
+                    goToSlide(slides.length - 1);
+                    break;
+                case 'Escape':
+                    exitFullscreen();
+                    break;
+            }
+        });
+
+        // Exit fullscreen/presentation mode - Make globally accessible
+        window.exitFullscreen = function () {
+            if (confirm('Exit slideshow?')) {
+                window.close();
+            }
+        };
+
+        // Initialize
+        initIndicators();
+        updateCounter();
+        updateNavButtons();
+
+        // Handle iframe load
+        document.getElementById('slideFrame').addEventListener('load', () => {
+            // Small delay to ensure slide is fully rendered
+            setTimeout(() => {
+                document.getElementById('slideFrame').classList.remove('hidden');
+            }, 100);
+        });
+
+        // Export dropdown toggle - Make globally accessible
+        window.toggleExportDropdown = function () {
+            const dropdown = document.getElementById('exportDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        };
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const exportBtn = document.querySelector('.export-btn');
+            const dropdown = document.getElementById('exportDropdown');
+            if (!exportBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Editor Mode Variables
+        let editorCurrentSlide = 0;
+        let selectedElement = null;
+        let editedSlides = {}; // Store edited slide content
+
+        // Open Editor - Make it globally accessible
+        window.openEditor = function () {
+            console.log('openEditor called');
+            try {
+                const dropdown = document.getElementById('exportDropdown');
+                if (dropdown) {
+                    dropdown.classList.remove('show');
+                }
+
+                const editorMode = document.getElementById('editorMode');
+                if (!editorMode) {
+                    console.error('Editor mode element not found');
+                    alert('Editor not available. Please refresh the page.');
+                    return;
+                }
+
+                editorMode.classList.add('active');
+                console.log('Editor mode activated');
+
+                // Populate slide selector
+                const slideSelect = document.getElementById('editorSlideSelect');
+                if (!slideSelect) {
+                    console.error('Slide select element not found');
+                    return;
+                }
+
+                slideSelect.innerHTML = '';
+                if (typeof slides !== 'undefined' && slides.length > 0) {
+                    slides.forEach((slide, index) => {
+                        const option = document.createElement('option');
+                        option.value = index;
+                        option.textContent = `${index + 1}. ${slide.title}`;
+                        slideSelect.appendChild(option);
+                    });
+
+                    // Load first slide
+                    editorCurrentSlide = 0;
+                    loadSlideForEditor();
+                } else {
+                    console.error('Slides array not defined');
+                    alert('Slides not loaded. Please refresh the page.');
+                }
+            } catch (error) {
+                console.error('Error opening editor:', error);
+                alert('Error opening editor: ' + error.message);
+            }
+        };
+
+        // Close Editor - Make it globally accessible
+        window.closeEditor = function () {
+            const editorMode = document.getElementById('editorMode');
+            if (editorMode) {
+                editorMode.classList.remove('active');
+            }
+            selectedElement = null;
+        };
+
+        // Load slide in editor - Make it globally accessible
+        window.loadSlideForEditor = function () {
+            const slideSelect = document.getElementById('editorSlideSelect');
+            if (!slideSelect) return;
+
+            const slideIndex = parseInt(slideSelect.value);
+            editorCurrentSlide = slideIndex;
+            const frame = document.getElementById('editorSlideFrame');
+            if (!frame || !slides || !slides[slideIndex]) return;
+
+            frame.src = slides[slideIndex].file;
+
+            // Wait for frame to load, then make elements editable
+            frame.onload = function () {
+                setTimeout(() => {
+                    makeElementsEditable();
+                }, 1000);
+            };
+        };
+
+        // Store editable boxes
+        let editableBoxes = [];
+        let currentEditableBox = null;
+
+        // Make elements in iframe editable
+        function makeElementsEditable() {
+            const frame = document.getElementById('editorSlideFrame');
+            const frameDoc = frame.contentDocument || frame.contentWindow.document;
+
+            if (!frameDoc) return;
+
+            // Remove all existing editable boxes
+            removeAllEditableBoxes(frameDoc);
+
+            // Calculate scale to fit slide in viewport
+            const container = document.getElementById('editorCanvasWrapper');
+            const containerWidth = container.clientWidth - 40;
+            const containerHeight = container.clientHeight - 40;
+            const slideWidth = 1280;
+            const slideHeight = 720;
+
+            const scaleX = containerWidth / slideWidth;
+            const scaleY = containerHeight / slideHeight;
+            const scale = Math.min(scaleX, scaleY, 1); // Don't scale up, only down
+
+            const slideContainer = document.getElementById('editorSlideContainer');
+            slideContainer.style.transform = `scale(${scale})`;
+            slideContainer.style.transformOrigin = 'center center';
+
+            // Make text elements clickable to create editable boxes
+            const textElements = frameDoc.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, div, li, td, th, .phase-label, .phase-metric, .phase-description, .contact-value, .contact-label, .role-title, .stat-value, .stat-label');
+            textElements.forEach(element => {
+                if (element.offsetParent !== null && (element.textContent.trim() || element.querySelector('img'))) {
+                    makeElementClickable(element, frameDoc, scale);
+                }
+            });
+
+            // Make images clickable
+            const images = frameDoc.querySelectorAll('img');
+            images.forEach(img => {
+                if (img.offsetParent !== null) {
+                    makeElementClickable(img, frameDoc, scale);
+                }
+            });
+        }
+
+        // Make element clickable to create editable box
+        function makeElementClickable(element, frameDoc, scale) {
+            element.classList.add('editable-element');
+            element.style.cursor = 'pointer';
+
+            element.addEventListener('click', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                console.log('Element clicked, creating box');
+                createEditableBox(element, frameDoc, scale);
+            });
+        }
+
+        // Create editable box around element (PowerPoint-style)
+        function createEditableBox(element, frameDoc, scale) {
+            console.log('createEditableBox called');
+
+            // Remove previous selection
+            if (currentEditableBox) {
+                currentEditableBox.classList.remove('selected');
+            }
+
+            // Create unique ID for element if not exists
+            let elementId = element.getAttribute('data-element-id');
+            if (!elementId) {
+                elementId = 'elem-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                element.setAttribute('data-element-id', elementId);
+            }
+
+            // Check if box already exists for this element
+            const existingBox = frameDoc.querySelector(`[data-element-id="${elementId}"]`);
+            if (existingBox) {
+                console.log('Box already exists, selecting it');
+                currentEditableBox = existingBox;
+                existingBox.classList.add('selected');
+                selectElement(element, frameDoc);
+                return;
+            }
+
+            // Get element position
+            const container = frameDoc.querySelector('.slide-container');
+            if (!container) {
+                console.error('Container not found');
+                return;
+            }
+
+            const elementRect = element.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+
+            const x = (elementRect.left - containerRect.left);
+            const y = (elementRect.top - containerRect.top);
+            const w = elementRect.width;
+            const h = elementRect.height;
+
+            console.log('Element position:', { x, y, w, h });
+
+            // Create editable box
+            const box = frameDoc.createElement('div');
+            box.className = 'editable-box selected';
+            box.setAttribute('data-element-id', elementId);
+            box.style.position = 'absolute';
+            box.style.left = x + 'px';
+            box.style.top = y + 'px';
+            box.style.width = w + 'px';
+            box.style.height = h + 'px';
+            box.style.pointerEvents = 'auto';
+            box.style.cursor = 'move';
+            box.style.userSelect = 'none';
+            box.style.webkitUserSelect = 'none';
+            box.style.mozUserSelect = 'none';
+            box.style.msUserSelect = 'none';
+            box.style.zIndex = '10000';
+
+            console.log('Box created at:', { x, y, w, h });
+
+            // Make element absolutely positioned
+            element.style.position = 'absolute';
+            element.style.left = x + 'px';
+            element.style.top = y + 'px';
+            element.style.zIndex = '9999';
+            element.style.pointerEvents = 'none'; // Prevent element from blocking box clicks
+
+            // Store reference to element
+            box._element = element;
+            element._box = box;
+
+            // Add resize handles
+            const handles = ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top', 'bottom', 'left', 'right'];
+            handles.forEach(handle => {
+                const handleEl = frameDoc.createElement('div');
+                handleEl.className = `resize-handle ${handle}`;
+                box.appendChild(handleEl);
+            });
+
+            container.appendChild(box);
+            editableBoxes.push(box);
+            currentEditableBox = box;
+
+            console.log('Box created and appended:', box);
+
+            // Make box draggable
+            makeBoxDraggable(box, frameDoc, scale);
+
+            // Make box resizable
+            makeBoxResizable(box, frameDoc, scale);
+
+            // Select element
+            selectElement(element, frameDoc);
+
+            // Test: Add a simple click handler to verify box is clickable
+            box.addEventListener('click', function (e) {
+                console.log('Box clicked!', e);
+            });
+        }
+
+        // Make editable box draggable
+        function makeBoxDraggable(box, frameDoc, scale) {
+            let isDragging = false;
+            let startX = 0, startY = 0, initialX = 0, initialY = 0;
+
+            // Add mousedown listener to the box
+            box.addEventListener('mousedown', function (e) {
+                // Don't drag if clicking on resize handle
+                if (e.target && e.target.classList && e.target.classList.contains('resize-handle')) {
+                    return;
+                }
+
+                e.stopPropagation();
+                e.preventDefault();
+                e.cancelBubble = true;
+
+                console.log('Drag started');
+                isDragging = true;
+                box.classList.add('dragging');
+
+                // Get initial mouse position
+                startX = e.clientX;
+                startY = e.clientY;
+
+                // Get initial box position
+                initialX = parseFloat(box.style.left) || 0;
+                initialY = parseFloat(box.style.top) || 0;
+
+                console.log('Initial positions:', { startX, startY, initialX, initialY });
+
+                // Get iframe and calculate scale
+                const iframe = document.getElementById('editorSlideFrame');
+                if (!iframe) return;
+
+                const iframeRect = iframe.getBoundingClientRect();
+                const actualScale = Math.min(iframeRect.width / 1280, iframeRect.height / 720, 1);
+
+                // Mouse move handler
+                const mouseMoveHandler = function (e) {
+                    if (!isDragging) return;
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Calculate movement delta
+                    const deltaX = (e.clientX - startX) / actualScale;
+                    const deltaY = (e.clientY - startY) / actualScale;
+
+                    // Calculate new position
+                    const boxWidth = parseFloat(box.style.width) || box.offsetWidth || 100;
+                    const boxHeight = parseFloat(box.style.height) || box.offsetHeight || 50;
+
+                    let newX = initialX + deltaX;
+                    let newY = initialY + deltaY;
+
+                    // Constrain to slide boundaries
+                    newX = Math.max(0, Math.min(1280 - boxWidth, newX));
+                    newY = Math.max(0, Math.min(720 - boxHeight, newY));
+
+                    // Update box position
+                    box.style.left = newX + 'px';
+                    box.style.top = newY + 'px';
+
+                    // Update element position
+                    if (box._element) {
+                        box._element.style.position = 'absolute';
+                        box._element.style.left = newX + 'px';
+                        box._element.style.top = newY + 'px';
+                        box._element.style.zIndex = '9999';
+                    }
+
+                    // Update property panel in real-time
+                    if (box._element) {
+                        updatePropertyPanel(box._element, frameDoc);
+                    }
+                };
+
+                // Mouse up handler
+                const mouseUpHandler = function (e) {
+                    if (!isDragging) return;
+
+                    console.log('Drag ended');
+                    isDragging = false;
+                    box.classList.remove('dragging');
+
+                    if (box._element) {
+                        box._element.style.zIndex = '9999';
+                    }
+
+                    // Remove all listeners
+                    document.removeEventListener('mousemove', mouseMoveHandler);
+                    document.removeEventListener('mouseup', mouseUpHandler);
+                    document.removeEventListener('mouseleave', mouseUpHandler);
+                    window.removeEventListener('mousemove', mouseMoveHandler);
+                    window.removeEventListener('mouseup', mouseUpHandler);
+                    window.removeEventListener('mouseleave', mouseUpHandler);
+                };
+
+                // Add listeners to both document and window for better cross-iframe handling
+                document.addEventListener('mousemove', mouseMoveHandler, { passive: false, capture: true });
+                document.addEventListener('mouseup', mouseUpHandler, { passive: false, capture: true });
+                document.addEventListener('mouseleave', mouseUpHandler, { passive: false, capture: true });
+                window.addEventListener('mousemove', mouseMoveHandler, { passive: false, capture: true });
+                window.addEventListener('mouseup', mouseUpHandler, { passive: false, capture: true });
+                window.addEventListener('mouseleave', mouseUpHandler, { passive: false, capture: true });
+
+                // Also add to iframe document
+                try {
+                    frameDoc.addEventListener('mousemove', mouseMoveHandler, { passive: false, capture: true });
+                    frameDoc.addEventListener('mouseup', mouseUpHandler, { passive: false, capture: true });
+                } catch (err) {
+                    console.log('Could not add listeners to frameDoc:', err);
+                }
+            });
+        }
+
+        // Make box resizable
+        function makeBoxResizable(box, frameDoc, scale) {
+            const handles = box.querySelectorAll('.resize-handle');
+            handles.forEach(handle => {
+                let isResizing = false;
+                let startX, startY, startWidth, startHeight, startLeft, startTop;
+
+                handle.addEventListener('mousedown', (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+
+                    isResizing = true;
+                    const container = frameDoc.querySelector('.slide-container');
+                    const containerRect = container.getBoundingClientRect();
+
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startWidth = parseFloat(box.style.width);
+                    startHeight = parseFloat(box.style.height);
+                    startLeft = parseFloat(box.style.left);
+                    startTop = parseFloat(box.style.top);
+
+                    const handleClass = handle.className.split(' ')[1];
+
+                    const onMouseMove = (e) => {
+                        if (!isResizing) return;
+
+                        const deltaX = (e.clientX - startX) / scale;
+                        const deltaY = (e.clientY - startY) / scale;
+
+                        let newWidth = startWidth;
+                        let newHeight = startHeight;
+                        let newLeft = startLeft;
+                        let newTop = startTop;
+
+                        if (handleClass.includes('right')) {
+                            newWidth = Math.max(50, startWidth + deltaX);
+                        }
+                        if (handleClass.includes('left')) {
+                            newWidth = Math.max(50, startWidth - deltaX);
+                            newLeft = startLeft + deltaX;
+                        }
+                        if (handleClass.includes('bottom')) {
+                            newHeight = Math.max(20, startHeight + deltaY);
+                        }
+                        if (handleClass.includes('top')) {
+                            newHeight = Math.max(20, startHeight - deltaY);
+                            newTop = startTop + deltaY;
+                        }
+
+                        box.style.width = newWidth + 'px';
+                        box.style.height = newHeight + 'px';
+                        box.style.left = newLeft + 'px';
+                        box.style.top = newTop + 'px';
+
+                        // Update element
+                        if (box._element) {
+                            box._element.style.width = newWidth + 'px';
+                            box._element.style.height = newHeight + 'px';
+                            box._element.style.left = newLeft + 'px';
+                            box._element.style.top = newTop + 'px';
+                        }
+
+                        if (box._element) {
+                            updatePropertyPanel(box._element, frameDoc);
+                        }
+                    };
+
+                    const onMouseUp = () => {
+                        isResizing = false;
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.removeEventListener('mouseup', onMouseUp);
+                    };
+
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                });
+            });
+        }
+
+        // Remove all editable boxes
+        function removeAllEditableBoxes(frameDoc) {
+            editableBoxes.forEach(box => {
+                if (box.parentNode) {
+                    box.parentNode.removeChild(box);
+                }
+            });
+            editableBoxes = [];
+            currentEditableBox = null;
+        }
+
+        // Select element for editing
+        function selectElement(element, frameDoc) {
+            // Remove previous selection
+            if (selectedElement) {
+                selectedElement.classList.remove('selected');
+            }
+
+            selectedElement = element;
+            element.classList.add('selected');
+
+            // Update property panel
+            updatePropertyPanel(element, frameDoc);
+        }
+
+        // Update property panel based on selected element
+        function updatePropertyPanel(element, frameDoc) {
+            const infoDiv = document.getElementById('selectedElementInfo');
+            const textProps = document.getElementById('textProperties');
+            const positionProps = document.getElementById('positionProperties');
+
+            if (element.tagName === 'IMG') {
+                infoDiv.textContent = `Image: ${element.alt || element.src.split('/').pop()}`;
+                textProps.style.display = 'none';
+                positionProps.style.display = 'block';
+
+                // Get actual position from style if set, otherwise from bounding rect
+                let x, y, w, h;
+
+                if (element.style.position === 'absolute' && element.style.left && element.style.top) {
+                    // Use style values if element has been moved
+                    x = parseFloat(element.style.left);
+                    y = parseFloat(element.style.top);
+                    w = element.style.width ? parseFloat(element.style.width) : element.offsetWidth;
+                    h = element.style.height ? parseFloat(element.style.height) : element.offsetHeight;
+                } else {
+                    // Calculate from bounding rect
+                    const rect = element.getBoundingClientRect();
+                    const container = frameDoc.querySelector('.slide-container');
+                    const containerRect = container.getBoundingClientRect();
+                    x = rect.left - containerRect.left;
+                    y = rect.top - containerRect.top;
+                    w = rect.width;
+                    h = rect.height;
+                }
+
+                document.getElementById('editX').value = Math.round(x);
+                document.getElementById('editY').value = Math.round(y);
+                document.getElementById('editWidth').value = Math.round(w);
+                document.getElementById('editHeight').value = Math.round(h);
+            } else {
+                infoDiv.textContent = `Text Element: ${element.tagName}`;
+                textProps.style.display = 'block';
+                positionProps.style.display = 'block';
+
+                const text = element.textContent.trim();
+                document.getElementById('editTextContent').value = text;
+
+                const styles = window.getComputedStyle(element);
+                document.getElementById('editFontSize').value = parseFloat(styles.fontSize);
+
+                const color = styles.color;
+                if (color.startsWith('rgb')) {
+                    const rgb = color.match(/\d+/g);
+                    const hex = '#' + rgb.map(x => parseInt(x).toString(16).padStart(2, '0')).join('');
+                    document.getElementById('editTextColor').value = hex;
+                } else {
+                    document.getElementById('editTextColor').value = color;
+                }
+
+                const fontWeight = parseInt(styles.fontWeight);
+                document.getElementById('editFontWeight').value = fontWeight >= 800 ? 800 : fontWeight >= 700 ? 700 : fontWeight >= 600 ? 600 : 400;
+
+                // Get actual position from style if set, otherwise from bounding rect
+                let x, y, w, h;
+
+                if (element.style.position === 'absolute' && element.style.left && element.style.top) {
+                    // Use style values if element has been moved
+                    x = parseFloat(element.style.left);
+                    y = parseFloat(element.style.top);
+                    w = element.style.width ? parseFloat(element.style.width) : element.offsetWidth;
+                    h = element.style.height ? parseFloat(element.style.height) : element.offsetHeight;
+                } else {
+                    // Calculate from bounding rect
+                    const rect = element.getBoundingClientRect();
+                    const container = frameDoc.querySelector('.slide-container');
+                    const containerRect = container.getBoundingClientRect();
+                    x = rect.left - containerRect.left;
+                    y = rect.top - containerRect.top;
+                    w = rect.width;
+                    h = rect.height;
+                }
+
+                document.getElementById('editX').value = Math.round(x);
+                document.getElementById('editY').value = Math.round(y);
+                document.getElementById('editWidth').value = Math.round(w);
+                document.getElementById('editHeight').value = Math.round(h);
+            }
+        }
+
+        // Update selected element with new properties
+        function updateSelectedElement() {
+            if (!selectedElement) return;
+
+            const frame = document.getElementById('editorSlideFrame');
+            const frameDoc = frame.contentDocument || frame.contentWindow.document;
+
+            if (selectedElement.tagName === 'IMG') {
+                // Update image position/size
+                const x = parseInt(document.getElementById('editX').value);
+                const y = parseInt(document.getElementById('editY').value);
+                const w = parseInt(document.getElementById('editWidth').value);
+                const h = parseInt(document.getElementById('editHeight').value);
+
+                selectedElement.style.position = 'absolute';
+                selectedElement.style.left = x + 'px';
+                selectedElement.style.top = y + 'px';
+                selectedElement.style.width = w + 'px';
+                selectedElement.style.height = h + 'px';
+            } else {
+                // Update text content
+                const newText = document.getElementById('editTextContent').value;
+                selectedElement.textContent = newText;
+
+                // Update text styles
+                const fontSize = document.getElementById('editFontSize').value;
+                const textColor = document.getElementById('editTextColor').value;
+                const fontWeight = document.getElementById('editFontWeight').value;
+
+                selectedElement.style.fontSize = fontSize + 'px';
+                selectedElement.style.color = textColor;
+                selectedElement.style.fontWeight = fontWeight;
+
+                // Update position
+                const x = parseInt(document.getElementById('editX').value);
+                const y = parseInt(document.getElementById('editY').value);
+                const w = parseInt(document.getElementById('editWidth').value);
+                const h = parseInt(document.getElementById('editHeight').value);
+
+                if (selectedElement.style.position !== 'absolute') {
+                    selectedElement.style.position = 'absolute';
+                }
+                selectedElement.style.left = x + 'px';
+                selectedElement.style.top = y + 'px';
+                selectedElement.style.width = w + 'px';
+                selectedElement.style.height = h + 'px';
+            }
+
+            // Store edited slide
+            const slideKey = slides[editorCurrentSlide].file;
+            if (!editedSlides[slideKey]) {
+                editedSlides[slideKey] = {};
+            }
+            editedSlides[slideKey][selectedElement.className || selectedElement.tagName] = selectedElement.outerHTML;
+        }
+
+        // Save edits - Make it globally accessible
+        window.saveEdits = function () {
+            try {
+                const frame = document.getElementById('editorSlideFrame');
+                if (!frame) {
+                    alert('Editor frame not found');
+                    return;
+                }
+
+                const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                if (!frameDoc) {
+                    alert('Cannot access slide content. This may be a security restriction.');
+                    return;
+                }
+
+                if (!slides || !slides[editorCurrentSlide]) {
+                    alert('Slide data not available');
+                    return;
+                }
+
+                const slideKey = slides[editorCurrentSlide].file;
+                const container = frameDoc.querySelector('.slide-container');
+
+                if (container) {
+                    // Clone the container to capture all current changes
+                    const clonedContainer = container.cloneNode(true);
+
+                    // Remove all editable boxes from the clone
+                    const editableBoxes = clonedContainer.querySelectorAll('.editable-box');
+                    editableBoxes.forEach(box => box.remove());
+
+                    // Store the complete HTML with all edits
+                    editedSlides[slideKey] = clonedContainer.outerHTML;
+
+                    console.log('Slide saved:', slideKey);
+                    console.log('Edited slides:', Object.keys(editedSlides));
+
+                    alert('Changes saved! The edited slide will be used when you export to PDF or PPTX.');
+                } else {
+                    alert('Error: Could not find slide container. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error saving edits:', error);
+                alert('Error saving changes: ' + error.message);
+            }
+        };
+
+        // Update selected element - Make it globally accessible
+        window.updateSelectedElement = function () {
+            if (!selectedElement) return;
+
+            const frame = document.getElementById('editorSlideFrame');
+            const frameDoc = frame.contentDocument || frame.contentWindow.document;
+
+            if (selectedElement.tagName === 'IMG') {
+                const x = parseInt(document.getElementById('editX').value);
+                const y = parseInt(document.getElementById('editY').value);
+                const w = parseInt(document.getElementById('editWidth').value);
+                const h = parseInt(document.getElementById('editHeight').value);
+
+                selectedElement.style.position = 'absolute';
+                selectedElement.style.left = x + 'px';
+                selectedElement.style.top = y + 'px';
+                selectedElement.style.width = w + 'px';
+                selectedElement.style.height = h + 'px';
+            } else {
+                const newText = document.getElementById('editTextContent').value;
+                selectedElement.textContent = newText;
+
+                const fontSize = document.getElementById('editFontSize').value;
+                const textColor = document.getElementById('editTextColor').value;
+                const fontWeight = document.getElementById('editFontWeight').value;
+
+                selectedElement.style.fontSize = fontSize + 'px';
+                selectedElement.style.color = textColor;
+                selectedElement.style.fontWeight = fontWeight;
+
+                const x = parseInt(document.getElementById('editX').value);
+                const y = parseInt(document.getElementById('editY').value);
+                const w = parseInt(document.getElementById('editWidth').value);
+                const h = parseInt(document.getElementById('editHeight').value);
+
+                if (selectedElement.style.position !== 'absolute') {
+                    selectedElement.style.position = 'absolute';
+                }
+                selectedElement.style.left = x + 'px';
+                selectedElement.style.top = y + 'px';
+                selectedElement.style.width = w + 'px';
+                selectedElement.style.height = h + 'px';
+            }
+
+            const slideKey = slides[editorCurrentSlide].file;
+            if (!editedSlides[slideKey]) {
+                editedSlides[slideKey] = {};
+            }
+            editedSlides[slideKey][selectedElement.className || selectedElement.tagName] = selectedElement.outerHTML;
+        };
+
+        // Show loading overlay
+        function showLoading(text) {
+            document.getElementById('loadingText').textContent = text;
+            document.getElementById('loadingOverlay').classList.add('show');
+        }
+
+        // Hide loading overlay
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('show');
+        }
+
+        // Export all slides as PDF - Make globally accessible
+        window.exportAsPDF = async function () {
+            const dropdown = document.getElementById('exportDropdown');
+            if (dropdown) {
+                dropdown.classList.remove('show');
+            }
+            showLoading('Generating PDF... This may take a few moments.');
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'px',
+                    format: [1280, 720]
+                });
+
+                const frame = document.getElementById('slideFrame');
+                const originalSrc = frame.src;
+                const originalSlide = currentSlide;
+
+                for (let i = 0; i < slides.length; i++) {
+                    showLoading(`Processing slide ${i + 1} of ${slides.length}...`);
+
+                    // Change to the slide we want to export
+                    frame.src = slides[i].file;
+
+                    // Wait for slide to load
+                    await new Promise((resolve) => {
+                        const checkLoad = () => {
+                            try {
+                                const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                                if (frameDoc && frameDoc.readyState === 'complete') {
+                                    setTimeout(resolve, 2000); // Wait for fonts/images
+                                } else {
+                                    frame.onload = () => {
+                                        setTimeout(resolve, 2000);
+                                    };
+                                }
+                            } catch (e) {
+                                // CORS issue, try alternative approach
+                                setTimeout(resolve, 3000);
+                            }
+                        };
+                        checkLoad();
+                    });
+
+                    try {
+                        const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                        let slideElement = frameDoc.querySelector('.slide-container');
+
+                        if (!slideElement) {
+                            console.warn(`Slide container not found for slide ${i + 1}`);
+                            continue;
+                        }
+
+                        // Use edited slide content if available
+                        const slideKey = slides[i].file;
+                        if (editedSlides[slideKey]) {
+                            // Create a temporary container with edited content
+                            const tempContainer = frameDoc.createElement('div');
+                            tempContainer.innerHTML = editedSlides[slideKey];
+                            tempContainer.style.width = '1280px';
+                            tempContainer.style.height = '720px';
+                            tempContainer.style.position = 'absolute';
+                            tempContainer.style.left = '-9999px';
+                            frameDoc.body.appendChild(tempContainer);
+                            slideElement = tempContainer.querySelector('.slide-container') || tempContainer;
+                        }
+
+                        // Use html2canvas directly
+                        const canvas = await html2canvas(slideElement, {
+                            scale: 1.5,
+                            useCORS: true,
+                            allowTaint: false,
+                            logging: false,
+                            width: 1280,
+                            height: 720,
+                            windowWidth: 1280,
+                            windowHeight: 720,
+                            backgroundColor: '#ffffff',
+                            removeContainer: false
+                        });
+
+                        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+
+                        if (i > 0) {
+                            pdf.addPage([1280, 720], 'landscape');
+                        }
+
+                        pdf.addImage(imgData, 'JPEG', 0, 0, 1280, 720);
+
+                        // Clean up temp container if created
+                        if (editedSlides[slideKey]) {
+                            frameDoc.body.removeChild(tempContainer);
+                        }
+
+                    } catch (error) {
+                        console.error(`Error processing slide ${i + 1}:`, error);
+                        // Continue with next slide
+                    }
+                }
+
+                // Restore original slide
+                frame.src = slides[originalSlide].file;
+                currentSlide = originalSlide;
+                updateCounter();
+
+                pdf.save('MahPatram-Presentation.pdf');
+                hideLoading();
+                alert('PDF exported successfully!');
+            } catch (error) {
+                console.error('PDF export error:', error);
+                hideLoading();
+                alert('Error generating PDF: ' + error.message);
+            }
+        }
+
+        // Helper function to convert pixels to inches (PPTX uses inches)
+        function pxToInches(px) {
+            return px / 96; // 96 DPI standard
+        }
+
+        // Helper function to get computed styles
+        function getComputedStyles(element) {
+            const styles = window.getComputedStyle(element);
+            return {
+                color: styles.color,
+                fontSize: parseFloat(styles.fontSize),
+                fontFamily: styles.fontFamily,
+                fontWeight: styles.fontWeight,
+                textAlign: styles.textAlign,
+                backgroundColor: styles.backgroundColor,
+                padding: {
+                    top: parseFloat(styles.paddingTop),
+                    right: parseFloat(styles.paddingRight),
+                    bottom: parseFloat(styles.paddingBottom),
+                    left: parseFloat(styles.paddingLeft)
+                },
+                margin: {
+                    top: parseFloat(styles.marginTop),
+                    right: parseFloat(styles.marginRight),
+                    bottom: parseFloat(styles.marginBottom),
+                    left: parseFloat(styles.marginLeft)
+                }
+            };
+        }
+
+        // Helper function to get element position
+        function getElementPosition(element, container) {
+            const rect = element.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            return {
+                x: pxToInches(rect.left - containerRect.left),
+                y: pxToInches(rect.top - containerRect.top),
+                w: pxToInches(rect.width),
+                h: pxToInches(rect.height)
+            };
+        }
+
+        // Helper function to convert color
+        function hexToRgb(hex) {
+            if (!hex) return { r: 0, g: 0, b: 0 };
+            if (hex.startsWith('#')) {
+                const r = parseInt(hex.slice(1, 3), 16);
+                const g = parseInt(hex.slice(3, 5), 16);
+                const b = parseInt(hex.slice(5, 7), 16);
+                return { r, g, b };
+            }
+            if (hex.startsWith('rgb')) {
+                const matches = hex.match(/\d+/g);
+                return { r: parseInt(matches[0]), g: parseInt(matches[1]), b: parseInt(matches[2]) };
+            }
+            return { r: 0, g: 0, b: 0 };
+        }
+
+        // Extract and add text elements to slide
+        function addTextElements(slide, container, frameDoc) {
+            // Get all text elements - more comprehensive selector
+            const selectors = 'h1, h2, h3, h4, h5, h6, p, span, div, li, td, th, .phase-label, .phase-metric, .phase-description, .phase-detail, .contact-value, .contact-label, .role-title, .role-subtitle, .stat-value, .stat-label, .col-title, .feature-text, .metric-text, .quad-title, .quad-subtitle, .list-item, .insight-box p, .cta-box p, .compounding-box p, .verdict-box, .center-label, .chart-center-text p, .phase-label, .phase-metric, .phase-description';
+            const textElements = container.querySelectorAll(selectors);
+
+            const processedElements = new Set();
+
+            textElements.forEach(element => {
+                // Skip if already processed or hidden
+                if (processedElements.has(element) || element.offsetParent === null) return;
+
+                const text = element.textContent.trim();
+                if (!text || text.length < 1) return;
+
+                // Skip if it's a child of another text element we're processing
+                let isChild = false;
+                textElements.forEach(other => {
+                    if (other !== element && other.contains(element)) {
+                        isChild = true;
+                    }
+                });
+                if (isChild) return;
+
+                const styles = getComputedStyles(element);
+                const pos = getElementPosition(element, container);
+
+                // Skip very small or out of bounds elements
+                if (pos.w < 0.05 || pos.h < 0.03 || pos.x < 0 || pos.y < 0 || pos.x > 10 || pos.y > 5.625) return;
+
+                // Get color
+                const color = hexToRgb(styles.color);
+                const colorHex = `#${color.r.toString(16).padStart(2, '0')}${color.g.toString(16).padStart(2, '0')}${color.b.toString(16).padStart(2, '0')}`;
+
+                // Determine font size (PPTX uses points, 1px ≈ 0.75pt)
+                let fontSize = Math.max(6, Math.min(72, styles.fontSize * 0.75));
+
+                // Determine alignment
+                let align = 'left';
+                if (styles.textAlign === 'center') align = 'center';
+                if (styles.textAlign === 'right') align = 'right';
+
+                // Check for bold
+                const isBold = parseInt(styles.fontWeight) >= 600 || styles.fontWeight === 'bold' || styles.fontWeight === '700' || styles.fontWeight === '800';
+
+                // Get font family
+                const fontFace = styles.fontFamily.split(',')[0].replace(/['"]/g, '').trim();
+
+                try {
+                    // Handle text with spans (for colored text)
+                    const hasSpans = element.querySelector('span');
+                    if (hasSpans) {
+                        // Process each text node and span separately
+                        const textParts = [];
+                        const walker = frameDoc.createTreeWalker(element, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, null, false);
+                        let node;
+                        while (node = walker.nextNode()) {
+                            if (node.nodeType === Node.TEXT_NODE) {
+                                const text = node.textContent.trim();
+                                if (text) {
+                                    const parent = node.parentElement;
+                                    const parentStyles = getComputedStyles(parent);
+                                    const parentColor = hexToRgb(parentStyles.color);
+                                    textParts.push({
+                                        text: text,
+                                        options: {
+                                            fontSize: fontSize,
+                                            color: `#${parentColor.r.toString(16).padStart(2, '0')}${parentColor.g.toString(16).padStart(2, '0')}${parentColor.b.toString(16).padStart(2, '0')}`,
+                                            bold: parseInt(parentStyles.fontWeight) >= 600
+                                        }
+                                    });
+                                }
+                            }
+                        }
+
+                        if (textParts.length > 0) {
+                            const textRuns = textParts.map(part => ({
+                                text: part.text,
+                                options: part.options
+                            }));
+                            slide.addText(textRuns, {
+                                x: pos.x,
+                                y: pos.y,
+                                w: pos.w,
+                                h: pos.h,
+                                align: align,
+                                fontSize: fontSize,
+                                fontFace: fontFace
+                            });
+                        }
+                    } else {
+                        slide.addText(text, {
+                            x: pos.x,
+                            y: pos.y,
+                            w: pos.w,
+                            h: pos.h,
+                            fontSize: fontSize,
+                            color: colorHex,
+                            align: align,
+                            bold: isBold,
+                            fontFace: fontFace
+                        });
+                    }
+
+                    processedElements.add(element);
+                } catch (e) {
+                    console.warn('Error adding text element:', e, element);
+                }
+            });
+        }
+
+        // Extract and add images to slide
+        async function addImages(slide, container, frameDoc) {
+            const images = container.querySelectorAll('img');
+
+            for (const img of images) {
+                if (img.offsetParent === null) continue;
+
+                try {
+                    const pos = getElementPosition(img, container);
+                    const src = img.src;
+
+                    // Convert image to base64 if needed
+                    let imgData = src;
+                    if (src.startsWith('http') || src.startsWith('//')) {
+                        // External image - try to fetch
+                        try {
+                            const response = await fetch(src);
+                            const blob = await response.blob();
+                            const reader = new FileReader();
+                            imgData = await new Promise((resolve) => {
+                                reader.onload = () => resolve(reader.result);
+                                reader.readAsDataURL(blob);
+                            });
+                        } catch (e) {
+                            console.warn('Could not load image:', src);
+                            continue;
+                        }
+                    }
+
+                    slide.addImage({
+                        data: imgData,
+                        x: pos.x,
+                        y: pos.y,
+                        w: pos.w,
+                        h: pos.h
+                    });
+                } catch (e) {
+                    console.warn('Error adding image:', e);
+                }
+            }
+        }
+
+        // Extract and add shapes/boxes
+        function addShapes(slide, container) {
+            // Get specific shape elements
+            const shapeSelectors = '.accent-bar, .phase-card, .insight-box, .cta-box, .stat-badge, .profile-card, .card-quadrant, .compounding-box, .model-comparison, .comparison-col, .comp-col, .bar-segment, .venn-circle';
+            const shapeElements = container.querySelectorAll(shapeSelectors);
+
+            shapeElements.forEach(element => {
+                if (element.offsetParent === null) return;
+
+                const styles = getComputedStyles(element);
+                const pos = getElementPosition(element, container);
+
+                if (pos.w < 0.05 || pos.h < 0.05) return;
+
+                const bgColor = hexToRgb(styles.backgroundColor);
+                const borderColor = hexToRgb(styles.borderColor || styles.borderLeftColor);
+                const borderWidth = parseFloat(styles.borderWidth || styles.borderLeftWidth || 0);
+
+                // Skip if transparent or white background (likely just a container)
+                if (bgColor.r === 255 && bgColor.g === 255 && bgColor.b === 255 && borderWidth === 0) return;
+                if (styles.backgroundColor === 'rgba(0, 0, 0, 0)' || styles.backgroundColor === 'transparent') return;
+
+                try {
+                    const shapeOptions = {
+                        x: pos.x,
+                        y: pos.y,
+                        w: pos.w,
+                        h: pos.h,
+                        fill: { color: `#${bgColor.r.toString(16).padStart(2, '0')}${bgColor.g.toString(16).padStart(2, '0')}${bgColor.b.toString(16).padStart(2, '0')}` }
+                    };
+
+                    if (borderWidth > 0) {
+                        shapeOptions.line = {
+                            color: `#${borderColor.r.toString(16).padStart(2, '0')}${borderColor.g.toString(16).padStart(2, '0')}${borderColor.b.toString(16).padStart(2, '0')}`,
+                            width: pxToInches(borderWidth)
+                        };
+                    } else {
+                        shapeOptions.line = { color: 'FFFFFF', width: 0 };
+                    }
+
+                    slide.addShape('rect', shapeOptions);
+                } catch (e) {
+                    console.warn('Error adding shape:', e);
+                }
+            });
+        }
+
+        // Export all slides as PPTX (Editable)
+        // Export as PPTX - Make globally accessible
+        window.exportAsPPTX = async function () {
+            const dropdown = document.getElementById('exportDropdown');
+            if (dropdown) {
+                dropdown.classList.remove('show');
+            }
+            showLoading('Generating editable PPTX... This may take a few moments.');
+
+            try {
+                if (typeof PptxGenJS === 'undefined') {
+                    throw new Error('PptxGenJS library not loaded. Please refresh the page.');
+                }
+
+                const pptx = new PptxGenJS();
+                pptx.layout = 'LAYOUT_WIDE';
+                pptx.defineLayout({ name: 'CUSTOM', width: 10, height: 5.625 });
+
+                const frame = document.getElementById('slideFrame');
+                const originalSlide = currentSlide;
+
+                for (let i = 0; i < slides.length; i++) {
+                    showLoading(`Processing slide ${i + 1} of ${slides.length}...`);
+
+                    // Change to the slide we want to export
+                    frame.src = slides[i].file;
+
+                    // Wait for slide to load
+                    await new Promise((resolve) => {
+                        const checkLoad = () => {
+                            try {
+                                const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                                if (frameDoc && frameDoc.readyState === 'complete') {
+                                    setTimeout(resolve, 2000);
+                                } else {
+                                    frame.onload = () => {
+                                        setTimeout(resolve, 2000);
+                                    };
+                                }
+                            } catch (e) {
+                                setTimeout(resolve, 3000);
+                            }
+                        };
+                        checkLoad();
+                    });
+
+                    try {
+                        const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                        const slideElement = frameDoc.querySelector('.slide-container');
+
+                        if (!slideElement) {
+                            console.warn(`Slide container not found for slide ${i + 1}`);
+                            continue;
+                        }
+
+                        // Create new slide
+                        const slide = pptx.addSlide();
+
+                        // Set slide background to white
+                        slide.background = { color: 'FFFFFF' };
+
+                        // Use edited slide content if available
+                        const slideKey = slides[i].file;
+                        if (editedSlides[slideKey]) {
+                            // Create a temporary container with edited content
+                            const tempContainer = frameDoc.createElement('div');
+                            tempContainer.innerHTML = editedSlides[slideKey];
+                            tempContainer.style.width = '1280px';
+                            tempContainer.style.height = '720px';
+                            tempContainer.style.position = 'absolute';
+                            tempContainer.style.left = '-9999px';
+                            frameDoc.body.appendChild(tempContainer);
+                            slideElement = tempContainer.querySelector('.slide-container') || tempContainer;
+                        }
+
+                        // Add accent bar if present
+                        const accentBar = slideElement.querySelector('.accent-bar');
+                        if (accentBar) {
+                            const pos = getElementPosition(accentBar, slideElement);
+                            slide.addShape('rect', {
+                                x: 0,
+                                y: 0,
+                                w: pos.w,
+                                h: 5.625,
+                                fill: { color: '1E3A5F' },
+                                line: { color: 'FFFFFF', width: 0 }
+                            });
+                        }
+
+                        // Add images first (background layer)
+                        await addImages(slide, slideElement, frameDoc);
+
+                        // Add shapes/boxes
+                        addShapes(slide, slideElement);
+
+                        // Add text elements (top layer)
+                        addTextElements(slide, slideElement, frameDoc);
+
+                        // Clean up temp container if created
+                        if (editedSlides[slideKey]) {
+                            frameDoc.body.removeChild(tempContainer);
+                        }
+
+                    } catch (error) {
+                        console.error(`Error processing slide ${i + 1}:`, error);
+                        // Add empty slide to maintain sequence
+                        const slide = pptx.addSlide();
+                        slide.addText(`Error loading slide ${i + 1}`, { x: 1, y: 2, fontSize: 18, color: 'FF0000' });
+                    }
+                }
+
+                // Restore original slide
+                frame.src = slides[originalSlide].file;
+                currentSlide = originalSlide;
+                updateCounter();
+
+                await pptx.writeFile({ fileName: 'MahPatram-Presentation.pptx' });
+                hideLoading();
+                alert('Editable PPTX exported successfully! All elements are now editable in PowerPoint.');
+            } catch (error) {
+                console.error('PPTX export error:', error);
+                hideLoading();
+                alert('Error generating PPTX: ' + error.message);
+            }
+        }
+    </script>
+
+    <script>
+        // Wait for everything to load
+        window.addEventListener('load', function () {
+            console.log('Page fully loaded, initializing buttons...');
+
+            // Small delay to ensure all scripts are loaded
+            setTimeout(function () {
+                console.log('Available functions check:', {
+                    changeSlide: typeof window.changeSlide,
+                    toggleExportDropdown: typeof window.toggleExportDropdown,
+                    exportAsPDF: typeof window.exportAsPDF,
+                    exportAsPPTX: typeof window.exportAsPPTX,
+                    openEditor: typeof window.openEditor,
+                    exitFullscreen: typeof window.exitFullscreen
+                });
+
+                // Export button
+                const exportBtn = document.querySelector('.export-btn');
+                if (exportBtn) {
+                    console.log('Export button found');
+                    // Remove existing onclick and add event listener
+                    exportBtn.onclick = null;
+                    exportBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('Export button clicked');
+                        if (window.toggleExportDropdown) {
+                            window.toggleExportDropdown();
+                        } else {
+                            console.error('toggleExportDropdown not found');
+                            alert('Export function not loaded. Please refresh the page.');
+                        }
+                    });
+                } else {
+                    console.error('Export button not found');
+                }
+
+                // Export options
+                const exportOptions = document.querySelectorAll('.export-option');
+                console.log('Found', exportOptions.length, 'export options');
+                exportOptions.forEach(function (option) {
+                    // Remove existing onclick
+                    option.onclick = null;
+                    option.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const text = this.textContent.trim();
+                        console.log('Export option clicked:', text);
+
+                        if (text.includes('Edit Slides') || text.includes('Edit')) {
+                            if (window.openEditor) {
+                                window.openEditor();
+                            } else {
+                                console.error('openEditor not found');
+                                alert('Editor function not loaded. Please refresh the page.');
+                            }
+                        } else if (text.includes('PDF') || text.includes('pdf')) {
+                            if (window.exportAsPDF) {
+                                window.exportAsPDF();
+                            } else {
+                                console.error('exportAsPDF not found');
+                                alert('PDF export function not loaded. Please refresh the page.');
+                            }
+                        } else if (text.includes('PPTX') || text.includes('pptx') || text.includes('PowerPoint')) {
+                            if (window.exportAsPPTX) {
+                                window.exportAsPPTX();
+                            } else {
+                                console.error('exportAsPPTX not found');
+                                alert('PPTX export function not loaded. Please refresh the page.');
+                            }
+                        }
+                    });
+                });
+
+                // Navigation buttons
+                const prevBtn = document.getElementById('prevBtn');
+                if (prevBtn) {
+                    prevBtn.onclick = null;
+                    prevBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        console.log('Prev button clicked');
+                        if (window.changeSlide) {
+                            window.changeSlide(-1);
+                        } else {
+                            console.error('changeSlide not found');
+                        }
+                    });
+                }
+
+                const nextBtn = document.getElementById('nextBtn');
+                if (nextBtn) {
+                    nextBtn.onclick = null;
+                    nextBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        console.log('Next button clicked');
+                        if (window.changeSlide) {
+                            window.changeSlide(1);
+                        } else {
+                            console.error('changeSlide not found');
+                        }
+                    });
+                }
+
+                // Exit button
+                const exitBtn = document.querySelector('.exit-button');
+                if (exitBtn) {
+                    exitBtn.onclick = null;
+                    exitBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        console.log('Exit button clicked');
+                        if (window.exitFullscreen) {
+                            window.exitFullscreen();
+                        } else {
+                            console.error('exitFullscreen not found');
+                        }
+                    });
+                }
+
+                console.log('All buttons initialized successfully');
+            }, 500); // Wait 500ms for all scripts to load
+        });
+    </script>
+</body>
+
+</html>
